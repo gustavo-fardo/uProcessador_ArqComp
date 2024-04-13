@@ -13,13 +13,14 @@ architecture a_ULA_tb of ULA_tb is
             ent_b : in unsigned(15 downto 0);
             saida : out unsigned(15 downto 0);
             zero  : out std_logic;  --flag zero
-            carry : out std_logic   --flag carry
+            carry : out std_logic;  --flag carry
+            overflow : out std_logic  --flag overflow
         );
     end component;
     --definicao dos sinais
     signal sel : unsigned(1 downto 0);
     signal ent_a, ent_b, saida : unsigned(15 downto 0);
-    signal zero, carry: std_logic;
+    signal zero, carry, overflow: std_logic;
 
     begin
         --instancia do component porta
@@ -29,10 +30,22 @@ architecture a_ULA_tb of ULA_tb is
                           ent_b => ent_b,
                           saida => saida,
                           zero => zero,
-                          carry => carry);
+                          carry => carry,
+                          overflow => overflow);
                             
         process
         begin
+            sel <= "00";
+            ent_a <= "0000000000000000";
+            ent_b <= "0000000000000001";
+            wait for 50 ns;
+            ent_a <= "1111111111111111";
+            ent_b <= "0000000000000001";
+            wait for 50 ns;
+            ent_a <= "0000000000000001";
+            ent_b <= "0000000000000001";
+            wait for 50 ns;
+
             sel <= "01";
             ent_a <= "0000000000000000";
             ent_b <= "0000000000000001";
