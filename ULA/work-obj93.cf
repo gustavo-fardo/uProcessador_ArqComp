@@ -1,0 +1,13 @@
+v 4
+file . "ULA_tb.vhd" "73174cf2bd91e85abf2d899b5e049e86851c286b" "20240413204736.245":
+  entity ula_tb at 1( 0) + 0 on 21;
+  architecture a_ula_tb of ula_tb at 8( 100) + 0 on 22;
+file . "adder_16bits.vhd" "57396f1ec895ae7da68467a0a1a2cfd1740c6539" "20240413202819.516":
+  entity adder_16bits at 1( 0) + 0 on 13;
+  architecture a_adder_16bits of adder_16bits at 15( 317) + 0 on 14;
+file . "full_adder.vhd" "c6c4b5d72e71900b808e25373b7e0d9dcb219fd7" "20240413202800.374":
+  entity full_adder at 1( 0) + 0 on 11;
+  architecture a_full_adder of full_adder at 14( 251) + 0 on 12;
+file . "ULA.vhd" "0df8262285a58c840a3d4f7d563e0efd99609f40" "20240413203628.116":
+  entity ula at 1( 0) + 0 on 15;
+  architecture a_ula of ula at 15( 330) + 0 on 16;
