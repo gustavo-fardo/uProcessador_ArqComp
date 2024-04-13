@@ -1,0 +1,28 @@
+[*]
+[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
+[*] Sat Apr 13 21:23:49 2024
+[*]
+[dumpfile] "/home/gustavo/Documents/ArComp/VHDL/uProcessador/ULA/ULA_tb.ghw"
+[dumpfile_mtime] "Sat Apr 13 21:22:17 2024"
+[dumpfile_size] 1686
+[savefile] "/home/gustavo/Documents/ArComp/VHDL/uProcessador/ULA/wave1.gtkw"
+[timestart] 0
+[size] 1000 600
+[pos] -1 -1
+*-25.589924 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.ula_tb.
+[sst_width] 233
+[signals_width] 118
+[sst_expanded] 1
+[sst_vpaned_height] 144
+@22
+#{top.ula_tb.ent_a[15:0]} top.ula_tb.ent_a[15] top.ula_tb.ent_a[14] top.ula_tb.ent_a[13] top.ula_tb.ent_a[12] top.ula_tb.ent_a[11] top.ula_tb.ent_a[10] top.ula_tb.ent_a[9] top.ula_tb.ent_a[8] top.ula_tb.ent_a[7] top.ula_tb.ent_a[6] top.ula_tb.ent_a[5] top.ula_tb.ent_a[4] top.ula_tb.ent_a[3] top.ula_tb.ent_a[2] top.ula_tb.ent_a[1] top.ula_tb.ent_a[0]
+#{top.ula_tb.ent_b[15:0]} top.ula_tb.ent_b[15] top.ula_tb.ent_b[14] top.ula_tb.ent_b[13] top.ula_tb.ent_b[12] top.ula_tb.ent_b[11] top.ula_tb.ent_b[10] top.ula_tb.ent_b[9] top.ula_tb.ent_b[8] top.ula_tb.ent_b[7] top.ula_tb.ent_b[6] top.ula_tb.ent_b[5] top.ula_tb.ent_b[4] top.ula_tb.ent_b[3] top.ula_tb.ent_b[2] top.ula_tb.ent_b[1] top.ula_tb.ent_b[0]
+#{top.ula_tb.saida[15:0]} top.ula_tb.saida[15] top.ula_tb.saida[14] top.ula_tb.saida[13] top.ula_tb.saida[12] top.ula_tb.saida[11] top.ula_tb.saida[10] top.ula_tb.saida[9] top.ula_tb.saida[8] top.ula_tb.saida[7] top.ula_tb.saida[6] top.ula_tb.saida[5] top.ula_tb.saida[4] top.ula_tb.saida[3] top.ula_tb.saida[2] top.ula_tb.saida[1] top.ula_tb.saida[0]
+@28
+top.ula_tb.carry
+@29
+top.ula_tb.zero
+[pattern_trace] 1
+[pattern_trace] 0
