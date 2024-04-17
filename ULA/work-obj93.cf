@@ -1,16 +1,19 @@
 v 4
-file . "mux4x1_16bits.vhd" "ed990d75c06a4e2e3fb296a8e2ed31e0ad5a8922" "20240413213055.162":
-  entity mux4x1_16bits at 1( 0) + 0 on 27;
-  architecture a_mux4x1_16bits of mux4x1_16bits at 16( 382) + 0 on 28;
-file . "ULA.vhd" "c68313d262c4d6e3a72a8f2b2c344b5db0c4ced9" "20240413231842.001":
-  entity ula at 1( 0) + 0 on 53;
-  architecture a_ula of ula at 17( 425) + 0 on 54;
-file . "full_adder.vhd" "c6c4b5d72e71900b808e25373b7e0d9dcb219fd7" "20240413202800.374":
-  entity full_adder at 1( 0) + 0 on 11;
-  architecture a_full_adder of full_adder at 14( 251) + 0 on 12;
-file . "adder_16bits.vhd" "57396f1ec895ae7da68467a0a1a2cfd1740c6539" "20240413202819.516":
-  entity adder_16bits at 1( 0) + 0 on 13;
-  architecture a_adder_16bits of adder_16bits at 15( 317) + 0 on 14;
-file . "ULA_tb.vhd" "e576d179f8dbab98086ea867df1e319660c8cdfb" "20240413231849.584":
-  entity ula_tb at 1( 0) + 0 on 55;
-  architecture a_ula_tb of ula_tb at 8( 100) + 0 on 56;
+file . "adder_16bits.vhd" "6a45cd82ca4759872696a4d06d98edf8f7356414" "20240416232548.065":
+  entity adder_16bits at 1( 0) + 0 on 95;
+  architecture a_adder_16bits of adder_16bits at 15( 317) + 0 on 96;
+file . "full_adder.vhd" "c6c4b5d72e71900b808e25373b7e0d9dcb219fd7" "20240416232548.065":
+  entity full_adder at 1( 0) + 0 on 97;
+  architecture a_full_adder of full_adder at 14( 251) + 0 on 98;
+file . "mux4x1_16bits.vhd" "ed990d75c06a4e2e3fb296a8e2ed31e0ad5a8922" "20240416232548.066":
+  entity mux4x1_16bits at 1( 0) + 0 on 99;
+  architecture a_mux4x1_16bits of mux4x1_16bits at 16( 382) + 0 on 100;
+file . "ULA_tb_full.vhd" "4562e5d1d7a9cf8127a4cfc1fbc588b62e0e0c06" "20240416232548.067":
+  entity ula_tb_full at 1( 0) + 0 on 101;
+  architecture a_ula_tb_full of ula_tb_full at 8( 105) + 0 on 102;
+file . "ULA_tb.vhd" "e576d179f8dbab98086ea867df1e319660c8cdfb" "20240416232548.067":
+  entity ula_tb at 1( 0) + 0 on 103;
+  architecture a_ula_tb of ula_tb at 8( 100) + 0 on 104;
+file . "ULA.vhd" "4ce5647619ac7cffc112fa718c8ccddad32ce703" "20240416232548.068":
+  entity ula at 1( 0) + 0 on 105;
+  architecture a_ula of ula at 17( 425) + 0 on 106;

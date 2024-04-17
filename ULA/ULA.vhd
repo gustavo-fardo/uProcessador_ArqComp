@@ -36,8 +36,9 @@ architecture a_ULA of ULA is
         );
     end component;
 
-    signal saida_add, saida_sub, saida_op3, saida_op4, saida_mux : unsigned(15 downto 0);
+    signal saida_add, saida_sub, saida_XOR, saida_AND, saida_mux : unsigned(15 downto 0);
     signal compl2_ent_b : unsigned(15 downto 0);
+    signal carry_add , carry_sub : std_logic := '0' ;
 
 begin
     -- Adicao
@@ -45,7 +46,7 @@ begin
                                     ent_b => ent_b,
                                     car_in => '0',
                                     saida => saida_add,
-                                    car_out => carry);
+                                    car_out => carry_add);
 
     -- Subtracao
     compl2_ent_b <= not(ent_b);
@@ -53,14 +54,24 @@ begin
                                         ent_b => compl2_ent_b,
                                         car_in => '1',
                                         saida => saida_sub,
-                                        car_out => carry);
-                                        
+                                        car_out => carry_sub);
+    
+    --XOR
+    saida_XOR<= ent_a xor ent_b;
+    --AND
+    saida_AND<= ent_a and ent_b;
+    -- Multiplexacao do CARRY para subtração e adição -- (é necessário...)
+
+    carry<= (carry_sub and (sel (0) and not sel (1))) --01
+    or (carry_add and (not sel(0) and not sel(1)) );  --00
+    --recebe '0' em op3 e op4       
+
     -- Multiplexacao do resultado
     mux : mux4x1_16bits port map(   sel => sel,
                                     ent0 => saida_add,
                                     ent1 => saida_sub,
-                                    ent2 => saida_op3,
-                                    ent3 => saida_op4,
+                                    ent2 => saida_XOR,
+                                    ent3 => saida_AND,
                                     saida => saida_mux);
     saida <= saida_mux;
 

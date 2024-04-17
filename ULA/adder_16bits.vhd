@@ -26,7 +26,7 @@ architecture a_adder_16bits of adder_16bits is
     signal carry_s : unsigned(16 downto 0);
 begin
 
-    gen00: for i in 15 downto 0 generate:
+    gen00: for i in 15 downto 0 generate
         addi: full_adder port map
             (ent_a=>ent_a(i),
             ent_b=>ent_b(i),
