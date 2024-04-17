@@ -14,13 +14,13 @@ architecture a_ULA_tb of ULA_tb is
             saida : out unsigned(15 downto 0);
             zero  : out std_logic;  --flag zero
             carry : out std_logic;  --flag carry
-            overflow : out std_logic  --flag overflow
+            overflow_adder : out std_logic  --flag overflow_adder
         );
     end component;
     --definicao dos sinais
     signal sel : unsigned(1 downto 0);
     signal ent_a, ent_b, saida : unsigned(15 downto 0);
-    signal zero, carry, overflow: std_logic;
+    signal zero, carry, overflow_adder: std_logic;
 
     begin
         --instancia do component porta
@@ -31,7 +31,7 @@ architecture a_ULA_tb of ULA_tb is
                           saida => saida,
                           zero => zero,
                           carry => carry,
-                          overflow => overflow);
+                          overflow_adder => overflow_adder);
                             
         process
         begin

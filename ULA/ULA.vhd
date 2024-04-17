@@ -10,7 +10,7 @@ entity ULA is
         saida : out unsigned(15 downto 0);
         zero  : out std_logic;    --flag zero
         carry : out std_logic;    --flag carry
-        overflow : out std_logic  --flag overflow
+        overflow_adder : out std_logic  --flag overflow_adder
     );
 end entity;
 
@@ -81,7 +81,7 @@ begin
                 or saida_mux(8) or saida_mux(9) or saida_mux(10) or saida_mux(11) 
                 or saida_mux(12) or saida_mux(13) or saida_mux(14) or saida_mux(15));
 
-    -- flag overflow
-    overflow <= not((ent_a(15) and ent_b(15) and saida_mux(15)) or (not ent_a(15) and not ent_b(15) and not saida_mux(15)));
+    -- flag overflow_adder
+    overflow_adder <= not((ent_a(15) and ent_b(15) and saida_mux(15)) or (not ent_a(15) and not ent_b(15) and not saida_mux(15)));
 
 end architecture;
