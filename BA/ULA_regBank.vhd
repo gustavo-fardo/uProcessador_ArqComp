@@ -100,7 +100,7 @@ architecture ULA_regBank_arch of ULA_regBank is
         muxREGSin: mux2_3bits 
         port map(
         --muxInput(1)=> regWrite_add_s, muxInput(0)=>reg2_add ,
-            muxInput=>muxInput3,
+        muxInput=>muxInput3,
         muxCtrl  => reg_Dst,
         muxOut   => regWrite_add_mux
         );
@@ -111,7 +111,7 @@ architecture ULA_regBank_arch of ULA_regBank is
             ent_a=> reg1_data_s,
             ent_b =>ULA_in2_s,
             saida =>ULA_out_s
-           -- zero  =>zero,
+            --zero  =>zero,
             --carry =>carry,
             --overflow_adder=> overflow_adder
         );

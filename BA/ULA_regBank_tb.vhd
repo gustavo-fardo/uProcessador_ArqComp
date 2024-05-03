@@ -31,14 +31,14 @@ component ULA_regBank is
     signal rst            :  std_logic:='0';
     signal wr_en          :  std_logic:='0';
     signal regWrite_add   :  unsigned(2 downto 0):="000";
-    signal ct_data  :  unsigned(15 downto 0):="0000000000000000";
+    signal ct_data        :  unsigned(15 downto 0):="0000000000000000";
     signal reg1_add       :  unsigned(2 downto 0):="000";
     signal reg2_add       :  unsigned(2 downto 0):="000";
     signal reg1_data      :  unsigned(15 downto 0):="0000000000000000";
     signal reg2_data      :  unsigned(15 downto 0):="0000000000000000";
-    signal op_sel   :  unsigned(1 downto 0):="00";
-    signal reg_Dst, ULAsrc  :  std_logic:= '0';
-    signal ULAout :  unsigned(15 downto 0) :="0000000000000000";
+    signal op_sel         :  unsigned(1 downto 0):="00";
+    signal reg_Dst, ULAsrc :  std_logic:= '0';
+    signal ULAout         :  unsigned(15 downto 0) :="0000000000000000";
 
     constant period_time : time      := 100 ns;
     signal   finished    : std_logic := '0';
@@ -89,7 +89,7 @@ component ULA_regBank is
             begin
                wait for period_time*3;
                wr_en      <='1';
-               regWrite_add   <="100";
+               regWrite_add   <="100";--carrega em x8 0x000F
                ct_data  <= "0000000000001111";
                reg1_add <="000";
                reg2_add<="000";
@@ -98,7 +98,7 @@ component ULA_regBank is
                wait for period_time;
                wr_en      <='1';
                regWrite_add   <="010";
-               ct_data  <= "0000000011110000";
+               ct_data  <= "0000000011110000";--soma reg x8 com constante 0x00F0 e armazena em x4
                reg1_add <="100";
                reg2_add<="000";
                op_sel   <="00";
@@ -106,7 +106,7 @@ component ULA_regBank is
                wait for period_time;
                wr_en      <='1';
                regWrite_add   <="001";
-               ct_data  <= "0000000000001111";
+               ct_data  <= "0000000000001111";-- faz operacao reg x8 subtracao reg x4 e carrega em reg x1
                reg1_add <="100";
                reg2_add<="010";
                op_sel   <="01";
