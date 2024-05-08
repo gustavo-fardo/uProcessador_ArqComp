@@ -1,0 +1,7 @@
+ghdl -a ULA/adder_16bits.vhd  ULA/mux4x1_16bits.vhd ULA/ULA.vhd ULA/full_adder.vhd BA/demux8_1bits.vhd BA/dff_e.vhd BA/mux2_3bits.vhd BA/mux2_16bits.vhd BA/mux8_16bits.vhd BA/reg16bit.vhd BA/regBank.vhd BA/ULA_regBank.vhd BA/ULA_regBank_tb.vhd controlUnity/PC.vhd controlUnity/PC_add.vhd controlUnity/PC_add_tb.vhd controlUnity/rom.vhd controlUnity/sttMac1.vhd 
+
+ghdl -e PC_add_tb
+
+ghdl -r PC_add_tb --wave=PC_add_tb.ghw
+
+gtkwave PC_add_tb.ghw

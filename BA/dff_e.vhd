@@ -14,7 +14,7 @@ entity dff_e is
  architecture dff_arch of dff_e is
     signal registro: std_logic:= '0';
  begin
-    process(clk,rst,wr_en)  -- acionado se houver mudança em clk, rst ou wr_en
+    process(clk,rst)  -- acionado se houver mudança em clk, rst ou wr_en
     begin                
        if rst='1' then
           registro <= '0';
