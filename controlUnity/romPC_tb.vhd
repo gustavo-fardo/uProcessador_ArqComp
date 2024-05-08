@@ -2,33 +2,41 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity PC_add_tb is
+entity romPC_tb is 
 end entity;
 
-architecture PC_add_tb_arch of PC_add_tb  is
-    component PC_add is
+architecture romPC_tb_arch of romPC_tb is
+
+    component romPC is
         port (
-            clk , wr_en,rst : in std_logic :='0';
-            --data_in : in unsigned(15 downto 0) :="0000000000000000"
-            --data_out : out unsigned(15 downto 0) :="0000000000000000"
-            data_out : out unsigned(2 downto 0) :="000"
-
+            clk , wr_en, rst , jmp : in std_logic :='0';
+            -- PC_jmp_add : in unsigned(15 downto 0) :="0000000000000000";
+            PC_jmp_add : in unsigned(2 downto 0) :="000";
+            -- add_out : out unsigned(15 downto 0) :="0000000000000000";
+            add_out : out unsigned(2 downto 0) :="000";
+            rom_data_out : out unsigned(11 downto 0) :="000000000000"
         );
-    end component;
---    signal data_out : unsigned(15 downto 0) :="0000000000000000" ;
-    signal data_out : unsigned(2 downto 0) :="000" ;
+    end component;    
 
-    signal clk , wr_en,rst : std_logic :='0';
+    -- signal PC_jmp_add : in unsigned(15 downto 0) :="0000000000000000";
+    signal PC_jmp_add :  unsigned(2 downto 0) :="000";
+    signal add_out :  unsigned(2 downto 0) :="000";
+    signal rom_data_out :  unsigned(11 downto 0) :="000000000000";
+    signal clk , wr_en, rst , jmp :  std_logic :='0';
 
     constant period_time : time      := 100 ns;
     signal   finished    : std_logic := '0';
 
+
 begin
-    PC_comp: PC_add 
+    romPC_unit: romPC 
         port map (
-            clk=>clk , wr_en=> wr_en, rst=>rst, 
-            data_out => data_out 
-        ); 
+            clk , wr_en, rst , jmp ,
+            PC_jmp_add ,
+            add_out , 
+            rom_data_out 
+        );
+
     
         process    -- sinal de reset
         begin
@@ -60,20 +68,18 @@ begin
         begin
            wait for period_time*3;
            wr_en      <='1';
-
            wait for period_time;
            wr_en      <='0';
-
            wait for period_time;
            wr_en      <='1';
            wait for period_time;
-           wr_en      <='0';
+           jmp<='1';
+           PC_jmp_add<="100";
            wait for period_time;
-           --wr_en      <='1';
+           jmp<='0';
            wait for 2*period_time;
-           wr_en      <='1';
            --rst<='0';
            wait;                     
         end process;
 
-end architecture PC_add_tb_arch;
+end architecture;

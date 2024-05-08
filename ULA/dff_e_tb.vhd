@@ -2,38 +2,39 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity PC_add_tb is
-end entity;
+entity dff_e_tb is
+ end entity;
 
-architecture PC_add_tb_arch of PC_add_tb  is
-    component PC_add is
-        port (
-            clk , wr_en,rst : in std_logic :='0';
-            --data_in : in unsigned(15 downto 0) :="0000000000000000"
-            --data_out : out unsigned(15 downto 0) :="0000000000000000"
-            data_out : out unsigned(2 downto 0) :="000"
-
+ architecture dff_e_tb_arch of dff_e_tb is
+    component dff_e is
+        port( clk      : in std_logic;
+              rst      : in std_logic;
+              wr_en    : in std_logic;
+              data_in  : in std_logic;
+              data_out : out std_logic
         );
-    end component;
---    signal data_out : unsigned(15 downto 0) :="0000000000000000" ;
-    signal data_out : unsigned(2 downto 0) :="000" ;
-
-    signal clk , wr_en,rst : std_logic :='0';
+     end component;
+    signal registro,clk     ,
+    rst      ,
+    wr_en  ,
+    data_in   : std_logic:='0';
+    signal data_out : std_logic;
 
     constant period_time : time      := 100 ns;
     signal   finished    : std_logic := '0';
 
-begin
-    PC_comp: PC_add 
-        port map (
-            clk=>clk , wr_en=> wr_en, rst=>rst, 
-            data_out => data_out 
-        ); 
-    
+ begin
+      dff_e_c: dff_e 
+        port map( clk     ,
+              rst      ,
+              wr_en  ,
+              data_in  ,
+              data_out 
+        );
         process    -- sinal de reset
         begin
            rst <= '1';
-           wait for period_time*1 ;
+           wait for period_time*3 ;
            rst <= '0';
            wait;
         end process;
@@ -56,24 +57,30 @@ begin
             wait;
         end process clk_proc;
 
+
+
+
         process                     
         begin
-           wait for period_time*3;
-           wr_en      <='1';
+           wait for period_time*4;
+           data_in <='1'; 
 
            wait for period_time;
            wr_en      <='0';
-
-           wait for period_time;
-           wr_en      <='1';
-           wait for period_time;
-           wr_en      <='0';
+           data_in <='0'; 
            wait for period_time;
            --wr_en      <='1';
-           wait for 2*period_time;
+           rst<='1'; 
+           wait for period_time;
+           --wr_en      <='0';
+           rst<='0';
+           data_in <='1'; 
+           wait for period_time;
            wr_en      <='1';
+           --rst<='0';  
+           wait for 2*period_time;
+           --wr_en      <='1';
            --rst<='0';
            wait;                     
         end process;
-
-end architecture PC_add_tb_arch;
+ end architecture dff_e_tb_arch;
