@@ -44,4 +44,21 @@ begin
         wait;
     end process clk_proc;
 
+    process                     
+    begin
+       wait for period_time*3;
+       endereco<="001";
+       wait for period_time;
+       endereco<="010";
+       wait for period_time;
+       endereco<="011";
+       wait for period_time;
+       endereco<="100";
+       
+       wait for period_time;
+       endereco<="101";
+       wait for 2*period_time;
+       wait;                     
+    end process;
+
 end architecture rom_tb_arch;

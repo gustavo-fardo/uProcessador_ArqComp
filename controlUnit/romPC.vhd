@@ -7,7 +7,7 @@ entity romPC is
         clk , wr_en, rst , jmp : in std_logic :='0';
         -- PC_jmp_add : in unsigned(15 downto 0) :="0000000000000000";
         PC_jmp_add : in unsigned(2 downto 0) :="000";
-        add_out : out unsigned(2 downto 0) :="000";
+        add_out : out unsigned(2 downto 0) :="000"; --espelhamento do PC
         rom_data_out : out unsigned(11 downto 0) :="000000000000"
     );
 end entity;
