@@ -56,13 +56,13 @@ begin
             stt 
         );
 
-    decode <= stt ; -- when stt = 1
-    execute <= not stt ; -- when stt = 0
+    decode <=  stt ; -- when stt = 1
+    execute <=  not stt ; -- when stt = 0
 
     romPC_cmp: romPC 
         port map (
-            clk_pc=>decode , 
-            clk_rom=>execute ,
+            clk_pc=>execute , 
+            clk_rom=>decode ,
             wr_en=>PCwrite_s , 
             rst=>rst , 
             jmp=>PCsource_s ,
