@@ -9,7 +9,7 @@ architecture romPC_tb_arch of romPC_tb is
 
     component romPC is
         port (
-            clk, wr_en, rst, jmp : in std_logic := '0';
+            clk_pc, clk_rom, wr_en, rst, jmp : in std_logic := '0';
             -- PC_jmp_add : in unsigned(15 downto 0) :="0000000000000000";
             PC_jmp_add : in unsigned(2 downto 0) := "000";
             -- add_out : out unsigned(15 downto 0) :="0000000000000000";
@@ -30,7 +30,7 @@ architecture romPC_tb_arch of romPC_tb is
 begin
     romPC_unit : romPC
     port map(
-        clk, wr_en, rst, jmp,
+        clk, clk, wr_en, rst, jmp,
         PC_jmp_add,
         add_out,
         rom_data_out

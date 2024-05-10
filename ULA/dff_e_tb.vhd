@@ -33,13 +33,13 @@ begin
         data_in,
         data_out
     );
-    process -- sinal de reset
-    begin
-        rst <= '1';
-        wait for period_time * 3;
-        rst <= '0';
-        wait;
-    end process;
+    -- process -- sinal de reset
+    -- begin
+    --     rst <= '1';
+    --     wait for period_time * 3;
+    --     rst <= '0';
+    --     wait;
+    -- end process;
 
     sim_time_proc : process
     begin
@@ -78,6 +78,8 @@ begin
         wr_en <= '1';
         --rst<='0';  
         wait for 2 * period_time;
+        rst <= '1';
+
         --wr_en      <='1';
         --rst<='0';
         wait;
