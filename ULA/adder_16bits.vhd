@@ -37,3 +37,4 @@ begin
     end generate;
     carry_s(0) <= car_in;
     car_out <= carry_s(16);
+end;

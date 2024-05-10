@@ -1,76 +1,91 @@
 v 4
-file . "controlUnit/ctrlUnit_romPC_tb.vhd" "5acd12df033dbb7cb4db21f99cad7437c3839ce8" "20240509023202.033":
-  entity ctrlunit_rompc_tb at 1( 0) + 0 on 1436;
-  architecture ctrlunit_rompc_tb_arch of ctrlunit_rompc_tb at 8( 111) + 0 on 1437;
-file . "controlUnit/ctrlUnit_romPC.vhd" "302349094275786d2a906e8875c9d2245008f561" "20240509023202.033":
-  entity ctrlunit_rompc at 1( 0) + 0 on 1434;
-  architecture ctrlunit_rompc_arch of ctrlunit_rompc at 14( 361) + 0 on 1435;
-file . "controlUnit/romPC_tb.vhd" "cdd1b7795ac50828e621436beddf81628cc1410c" "20240509023202.032":
-  entity rompc_tb at 1( 0) + 0 on 1430;
-  architecture rompc_tb_arch of rompc_tb at 8( 103) + 0 on 1431;
-file . "controlUnit/romPC.vhd" "3b54a188fe60d0cd71e8f2ad77fa8619f9bebf2f" "20240509023202.031":
-  entity rompc at 1( 0) + 0 on 1428;
-  architecture rompc_arch of rompc at 14( 379) + 0 on 1429;
-file . "controlUnit/rom_tb.vhd" "2525832216741f79ba854c604424527d2e80134d" "20240509023202.031":
-  entity rom_tb at 1( 0) + 0 on 1426;
-  architecture rom_tb_arch of rom_tb at 8( 100) + 0 on 1427;
-file . "controlUnit/sttMac1.vhd" "596d71a08f3f2fa0e1fbb02f07cae10f17995f57" "20240509023202.031":
-  entity sttmac1 at 1( 0) + 0 on 1424;
-  architecture sttmac1_arch of sttmac1 at 13( 212) + 0 on 1425;
-file . "controlUnit/rom.vhd" "ed461cd12771ca68116ab1edbe772306c7d583db" "20240509023202.030":
-  entity rom at 1( 0) + 0 on 1422;
-  architecture a_rom of rom at 10( 227) + 0 on 1423;
-file . "controlUnit/PC_add_tb.vhd" "1f82e318e5edc7a6d30ecbf48fc39ebe2cdff3dd" "20240509023202.030":
-  entity pc_add_tb at 1( 0) + 0 on 1420;
-  architecture pc_add_tb_arch of pc_add_tb at 8( 103) + 0 on 1421;
-file . "controlUnit/PC_add.vhd" "29c48dbc03ddea1323827a479c2844c6222775b9" "20240509023202.030":
-  entity pc_add at 1( 0) + 0 on 1418;
-  architecture pc_add_arch of pc_add at 13( 285) + 0 on 1419;
-file . "controlUnit/PC.vhd" "19a596dc67a10ddaddee2448db2725b87e50c1d9" "20240509023202.029":
-  entity pc at 1( 0) + 0 on 1416;
-  architecture pc_arch of pc at 13( 267) + 0 on 1417;
-file . "regBank/ULA_regBank_tb.vhd" "6bfcdf8eb76c0963b13795b44d5fe78902cd6a15" "20240509023202.029":
-  entity ula_regbank_tb at 1( 0) + 0 on 1414;
-  architecture ula_regbank_tb_a of ula_regbank_tb at 9( 109) + 0 on 1415;
-file . "regBank/ULA_regBank.vhd" "4e72f80a3a8b2442720d213b9fe4199bb1f37e23" "20240509023202.028":
-  entity ula_regbank at 1( 0) + 0 on 1412;
-  architecture ula_regbank_arch of ula_regbank at 29( 801) + 0 on 1413;
-file . "regBank/regBank.vhd" "50131fc5bcf661cf0a0dc04ac9d0b2dc17b6a2fc" "20240509023202.028":
-  entity regbank at 1( 0) + 0 on 1410;
-  architecture regbank_arch of regbank at 21( 580) + 0 on 1411;
-file . "regBank/reg16bit.vhd" "0f91788e2d3e2f2b13c8e343ba8f457923858ea7" "20240509023202.027":
-  entity reg16bits at 1( 0) + 0 on 1408;
-  architecture reg16bits_arch of reg16bits at 14( 303) + 0 on 1409;
-file . "regBank/mux8_16bits.vhd" "301ce409bfee6d43d44901d9bbc1e1e31eca93a5" "20240509023202.027":
-  package muxinput_pkg at 1( 0) + 0 on 1405;
-  entity mux8_16bits at 12( 298) + 0 on 1406;
-  architecture mux8_16bits_arch of mux8_16bits at 27( 642) + 0 on 1407;
-file . "regBank/mux2_16bits.vhd" "c5bc3548bdbd92578c0e5b0762eea6d7eb1cf426" "20240509023202.026":
-  package muxinputb_pkg at 2( 1) + 0 on 1402;
-  entity mux2_16bits at 15( 279) + 0 on 1403;
-  architecture mux2_16bits_a of mux2_16bits at 29( 612) + 0 on 1404;
-file . "regBank/mux2_3bits.vhd" "50d7453139045a50d6f9dfa5ad96905c4d5c10b0" "20240509023202.025":
-  package muxinputc_pkg at 2( 1) + 0 on 1399;
-  entity mux2_3bits at 16( 278) + 0 on 1400;
-  architecture mux2_3bits_a of mux2_3bits at 30( 609) + 0 on 1401;
-file . "regBank/dff_e.vhd" "c8a7a15f8f87a1efa9c9ead0855059352a7b6942" "20240509023202.024":
-  entity dff_e at 1( 0) + 0 on 1397;
-  architecture dff_arch of dff_e at 14( 282) + 1 on 1398;
-file . "regBank/demux8_1bits.vhd" "e8c2be42ecf429babb461904367d3370ef1b1007" "20240509023202.023":
-  entity demux8_1bits at 1( 0) + 0 on 1395;
-  architecture demux8_1bits_arch of demux8_1bits at 14( 322) + 0 on 1396;
-file . "ULA/full_adder.vhd" "c6c4b5d72e71900b808e25373b7e0d9dcb219fd7" "20240509023202.022":
-  entity full_adder at 1( 0) + 0 on 1393;
-  architecture a_full_adder of full_adder at 14( 251) + 0 on 1394;
-file . "ULA/ULA.vhd" "c2784fbb74cb56982b9efd90d427638a49f3d51d" "20240509023202.022":
-  entity ula at 1( 0) + 0 on 1391;
-  architecture a_ula of ula at 17( 437) + 0 on 1392;
-file . "ULA/mux4x1_16bits.vhd" "ed990d75c06a4e2e3fb296a8e2ed31e0ad5a8922" "20240509023202.021":
-  entity mux4x1_16bits at 1( 0) + 0 on 1389;
-  architecture a_mux4x1_16bits of mux4x1_16bits at 16( 382) + 0 on 1390;
-file . "ULA/adder_16bits.vhd" "6a45cd82ca4759872696a4d06d98edf8f7356414" "20240509023202.020":
-  entity adder_16bits at 1( 0) + 0 on 1387;
-  architecture a_adder_16bits of adder_16bits at 15( 317) + 0 on 1388;
-file . "controlUnit/ctrlUnit.vhd" "19e18d2f5664a90c63a0ab122e54bbc94ed04781" "20240509023202.032":
-  entity ctrlunit at 1( 0) + 0 on 1432;
-  architecture ctrlunit_arch of ctrlunit at 13( 333) + 0 on 1433;
+file . "./regBank/regBank_tb.vhd" "6c90bd86ceb2e5f041e09fb340605b11362d7bc5" "20240510184017.302":
+  entity regbank_tb at 1( 0) + 0 on 227;
+  architecture regbank_tb_arch of regbank_tb at 11( 146) + 0 on 228;
+file . "./regBank/ULA_regBank_tb.vhd" "209746f8646fb5390d54321d8529ac6672a2a87b" "20240510184017.273":
+  entity ula_regbank_tb at 1( 0) + 0 on 219;
+  architecture ula_regbank_tb_a of ula_regbank_tb at 7( 107) + 0 on 220;
+file . "./ULA/ULA.vhd" "b83510ac5389bff4aa6c89696da8b52af6dbd63b" "20240510184017.379":
+  entity ula at 1( 0) + 0 on 250;
+  architecture a_ula of ula at 17( 428) + 0 on 251;
+file . "./ULA/ULA_tb.vhd" "c937f391f34b39a6b959a341e26755f3f184c4ec" "20240510184017.363":
+  entity ula_tb at 1( 0) + 0 on 246;
+  architecture a_ula_tb of ula_tb at 8( 100) + 0 on 247;
+file . "./ULA/ULA_tb_full.vhd" "fd4026e24734a80f4fa37ac3f5c7e3ffef60e19d" "20240510184017.350":
+  entity ula_tb_full at 1( 0) + 0 on 242;
+  architecture a_ula_tb_full of ula_tb_full at 8( 105) + 0 on 243;
+file . "./ULA/dff_e_tb.vhd" "c7c1810a223ef0833e355552cade11cb043ca5ff" "20240510184017.336":
+  entity dff_e_tb at 1( 0) + 0 on 238;
+  architecture dff_e_tb_arch of dff_e_tb at 8( 102) + 0 on 239;
+file . "./regBank/demux_tb.vhd" "b0fd988fd4ef7617d794c71a6cecf2087ac147ce" "20240510184017.322":
+  entity demux_tb at 1( 0) + 0 on 234;
+  architecture demux_tb_a of demux_tb at 8( 102) + 0 on 235;
+file . "./regBank/reg16bit.vhd" "cc36cf8cb27fd55275bf44fde406f5a99ccabdbb" "20240510184017.308":
+  entity reg16bits at 1( 0) + 0 on 229;
+  architecture reg16bits_arch of reg16bits at 15( 284) + 0 on 230;
+file . "./regBank/dff_e.vhd" "dd886cb6cfda7613b4c0d628c5762e56b479f962" "20240510184017.280":
+  entity dff_e at 1( 0) + 0 on 221;
+  architecture dff_arch of dff_e at 15( 256) + 0 on 222;
+file . "./regBank/mux2_16bits.vhd" "968e85ad1e805800b69e5799fab75f3ea514e716" "20240510184017.258":
+  package muxinputb_pkg at 2( 1) + 0 on 213;
+  entity mux2_16bits at 13( 230) + 0 on 214;
+  architecture mux2_16bits_a of mux2_16bits at 27( 506) + 0 on 215;
+file . "./controlUnit/ctrlUnit.vhd" "c39868ccb1bf7cd7e223d793c4ecd50afc7b812d" "20240510184017.244":
+  entity ctrlunit at 1( 0) + 0 on 209;
+  architecture ctrlunit_arch of ctrlunit at 13( 328) + 0 on 210;
+file . "./controlUnit/rom.vhd" "3946c1020be1afa3ad2fa0bb78f276fcc45213db" "20240510184017.231":
+  entity rom at 1( 0) + 0 on 205;
+  architecture a_rom of rom at 11( 217) + 0 on 206;
+file . "./controlUnit/PC_add.vhd" "9ded5fdea84a0fbf6344c1bda3bf252acfdfa6da" "20240510184017.217":
+  entity pc_add at 1( 0) + 0 on 201;
+  architecture pc_add_arch of pc_add at 13( 285) + 0 on 202;
+file . "./controlUnit/romPC_tb.vhd" "ae8a57222762eb86a8e2391d69a8561c99056073" "20240510184017.203":
+  entity rompc_tb at 1( 0) + 0 on 197;
+  architecture rompc_tb_arch of rompc_tb at 8( 102) + 0 on 198;
+file . "./controlUnit/rom_tb.vhd" "b57becc7d3a36f044a419408429e1737e565f569" "20240510184017.186":
+  entity rom_tb at 1( 0) + 0 on 193;
+  architecture rom_tb_arch of rom_tb at 8( 100) + 0 on 194;
+file . "./controlUnit/ctrlUnit_romPC_tb.vhd" "8f1a3d8bec5308b926f580b0816f28282251c4c7" "20240510184017.177":
+  entity ctrlunit_rompc_tb at 1( 0) + 0 on 191;
+  architecture ctrlunit_rompc_tb_arch of ctrlunit_rompc_tb at 8( 111) + 0 on 192;
+file . "./controlUnit/sttMac1.vhd" "fffc91be398959375966631aa64d841a493e274c" "20240510184017.195":
+  entity sttmac1 at 1( 0) + 0 on 195;
+  architecture sttmac1_arch of sttmac1 at 12( 212) + 0 on 196;
+file . "./controlUnit/PC.vhd" "e8dbd2edc7fdca24b025f7f4f780dfc7592bcf5d" "20240510184017.210":
+  entity pc at 1( 0) + 0 on 199;
+  architecture pc_arch of pc at 13( 266) + 0 on 200;
+file . "./controlUnit/romPC.vhd" "db98cd84db2bca3afccb4241d863e812589cf6a5" "20240510184017.224":
+  entity rompc at 1( 0) + 0 on 203;
+  architecture rompc_arch of rompc at 14( 377) + 0 on 204;
+file . "./controlUnit/PC_add_tb.vhd" "603bafb31043074b9dc65cb102fbc4d87cf14a81" "20240510184017.237":
+  entity pc_add_tb at 1( 0) + 0 on 207;
+  architecture pc_add_tb_arch of pc_add_tb at 8( 103) + 0 on 208;
+file . "./controlUnit/ctrlUnit_romPC.vhd" "353b2ba4b87dbfaf906e51efa7d196f238817516" "20240510184017.251":
+  entity ctrlunit_rompc at 1( 0) + 0 on 211;
+  architecture ctrlunit_rompc_arch of ctrlunit_rompc at 14( 353) + 0 on 212;
+file . "./regBank/mux2_3bits.vhd" "94dd2f53460b6329e289127d6c315140194feef6" "20240510184017.266":
+  package muxinputc_pkg at 2( 1) + 0 on 216;
+  entity mux2_3bits at 14( 276) + 0 on 217;
+  architecture mux2_3bits_a of mux2_3bits at 28( 607) + 0 on 218;
+file . "./regBank/demux8_1bits.vhd" "feadf39253cce4faab84664893611ad8a561b633" "20240510184017.287":
+  entity demux8_1bits at 1( 0) + 0 on 223;
+  architecture demux8_1bits_arch of demux8_1bits at 12( 263) + 0 on 224;
+file . "./regBank/regBank.vhd" "cf636e8598085b5180815b63cf388b717d1ce537" "20240510184017.330":
+  entity regbank at 1( 0) + 0 on 236;
+  architecture regbank_arch of regbank at 22( 566) + 0 on 237;
+file . "./ULA/full_adder.vhd" "72dcda8411200b4bf8e3223ba5c93bb9d61e0f96" "20240510184017.342":
+  entity full_adder at 1( 0) + 0 on 240;
+  architecture a_full_adder of full_adder at 14( 250) + 0 on 241;
+file . "./ULA/adder_16bits.vhd" "db5fcec4e4de8c70bbeafb4b6f76d46f491a8d9c" "20240510184017.356":
+  entity adder_16bits at 1( 0) + 0 on 244;
+  architecture a_adder_16bits of adder_16bits at 15( 314) + 0 on 245;
+file . "./ULA/mux4x1_16bits.vhd" "b3559b54a30ddd0256d9df22fe25ca1835027566" "20240510184017.370":
+  entity mux4x1_16bits at 1( 0) + 0 on 248;
+  architecture a_mux4x1_16bits of mux4x1_16bits at 16( 370) + 0 on 249;
+file . "./regBank/ULA_regBank.vhd" "69a1e425d4703471919fe1bbf81047dc44c2c72e" "20240510184017.295":
+  entity ula_regbank at 1( 0) + 0 on 225;
+  architecture ula_regbank_arch of ula_regbank at 26( 723) + 0 on 226;
+file . "./regBank/mux8_16bits.vhd" "edfdc65446958d77271ec7a264b7476f91f11e02" "20240510184017.316":
+  package muxinput_pkg at 1( 0) + 0 on 231;
+  entity mux8_16bits at 12( 226) + 0 on 232;
+  architecture mux8_16bits_arch of mux8_16bits at 27( 513) + 0 on 233;

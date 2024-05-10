@@ -9,13 +9,13 @@ architecture rom_tb_arch of rom_tb is
     component rom is
         port (
             clk : in std_logic;
-            endereco : in unsigned(2 downto 0);
-            dado : out unsigned(11 downto 0)
+            address : in unsigned(2 downto 0);
+            data : out unsigned(11 downto 0)
         );
     end component;
 
-    signal dado : unsigned(11 downto 0) := "000000000000";
-    signal endereco : unsigned(2 downto 0) := "000";
+    signal data : unsigned(11 downto 0) := "000000000000";
+    signal address : unsigned(2 downto 0) := "000";
     signal clk : std_logic := '0';
 
     constant period_time : time := 100 ns;
@@ -24,7 +24,7 @@ architecture rom_tb_arch of rom_tb is
 begin
     rom_comp : rom
     port map(
-        clk => clk, endereco => endereco, dado => dado
+        clk => clk, address => address, data => data
     );
 
     sim_time_proc : process
@@ -48,15 +48,15 @@ begin
     process
     begin
         wait for period_time * 3;
-        endereco <= "001";
+        address <= "001";
         wait for period_time;
-        endereco <= "010";
+        address <= "010";
         wait for period_time;
-        endereco <= "011";
+        address <= "011";
         wait for period_time;
-        endereco <= "100";
+        address <= "100";
         wait for period_time;
-        endereco <= "101";
+        address <= "101";
         wait for 2 * period_time;
         wait;
     end process;
