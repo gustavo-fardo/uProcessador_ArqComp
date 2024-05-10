@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Managing $1/$2"
+echo "Managing $1"
 
 ghdl -a regBank/mux8_16bits.vhd # EXCEPITON: Dependency
 
@@ -9,8 +9,8 @@ while IFS= read -r -d '' file; do
     ghdl -a "$file"
 done
 
-ghdl -e $2
+ghdl -e $1
 
-ghdl -r $2 --wave=$2.ghw
+ghdl -r $1 --wave=$1.ghw
 
-gtkwave $2.ghw
+gtkwave $1.ghw
