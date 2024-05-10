@@ -3,8 +3,6 @@ LIBRARY ieee;
 USE ieee.std_logic_1164.all;       
 use ieee.numeric_std.all;
 
-
-
 PACKAGE muxInputC_pkg IS 
 TYPE u_array_2x3 IS ARRAY ( 1 DOWNTO 0) OF unsigned (2 downto 0);
 
@@ -29,12 +27,12 @@ end entity;
 
 architecture mux2_3bits_a of mux2_3bits is
     begin
-    --p_mux: process muxCtrl,muxInput
-    --begin
-    --muxOut <= muxInput(to_integer( muxCtrl));
-    muxOut <=    muxInput(0) when muxCtrl='0' else
-                muxInput(1) when muxCtrl='1' else
-                "000";
-    --end process;
+        --p_mux: process muxCtrl,muxInput
+        --begin
+        --muxOut <= muxInput(to_integer( muxCtrl));
+        muxOut <=    muxInput(0) when muxCtrl='0' else
+                    muxInput(1) when muxCtrl='1' else
+                    "000";
+        --end process;
 
 end mux2_3bits_a;

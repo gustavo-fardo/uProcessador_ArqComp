@@ -2,12 +2,12 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 entity full_adder is
-    port(
-        ent_a  : in std_logic;
-        ent_b  : in std_logic;
+    port (
+        ent_a : in std_logic;
+        ent_b : in std_logic;
         car_in : in std_logic;
-        saida  : out std_logic;
-        car_out: out std_logic
+        saida : out std_logic;
+        car_out : out std_logic
     );
 end entity;
 

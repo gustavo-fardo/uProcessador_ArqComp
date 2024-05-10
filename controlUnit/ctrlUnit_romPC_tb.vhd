@@ -7,30 +7,28 @@ end entity;
 
 architecture ctrlUnit_romPC_tb_arch of ctrlUnit_romPC_tb is
     component ctrlUnit_romPC is
-        port(
-            clk ,  rst : in std_logic;
+        port (
+            clk, rst : in std_logic;
             --instr : in unsigned (11 downto 0) :="000000000000";
-            ALUsrcA, ALUsrcB, regWrite , memToReg , memRead , PCwrite , PCsource  : out std_logic ;
-            ALUop : out unsigned (1 downto 0) 
+            ULAsrcA, ULAsrcB, regWrite, memToReg, memRead, PCwrite, PCsource : out std_logic;
+            ULAop : out unsigned (1 downto 0)
         );
     end component;
 
-    signal clk , rst : std_logic :='0';
+    signal clk, rst : std_logic := '0';
 
-    constant period_time : time      := 100 ns;
-    signal   finished    : std_logic := '0';
+    constant period_time : time := 100 ns;
+    signal finished : std_logic := '0';
 
 begin
 
-    ctrlUnit_romPC_comp: ctrlUnit_romPC 
-        port map(
-            clk ,  rst --,
-            --instr : in unsigned (11 downto 0) :="000000000000";
-            --ALUsrcA, ALUsrcB, regWrite , memToReg , memRead , PCwrite , PCsource  : out std_logic ;
-            --ALUop : out unsigned (1 downto 0) 
-        );
-
-
+    ctrlUnit_romPC_comp : ctrlUnit_romPC
+    port map(
+        clk, rst --,
+        --instr : in unsigned (11 downto 0) :="000000000000";
+        --ULAsrcA, ULAsrcB, regWrite , memToReg , memRead , PCwrite , PCsource  : out std_logic ;
+        --ULAop : out unsigned (1 downto 0) 
+    );
     -- process    -- sinal de reset
     -- begin
     --    rst <= '1';
@@ -39,16 +37,16 @@ begin
     --    wait;
     -- end process;
 
-    sim_time_proc: process
+    sim_time_proc : process
     begin
-        wait for 10 us;         
+        wait for 10 us;
         finished <= '1';
         wait;
     end process sim_time_proc;
 
-    clk_proc: process
+    clk_proc : process
     begin
-        wait for period_time*3 ;                       
+        wait for period_time * 3;
         while finished /= '1' loop
             clk <= '1';
             wait for period_time/2;
@@ -57,6 +55,5 @@ begin
         end loop;
         wait;
     end process clk_proc;
-
 
 end architecture;
