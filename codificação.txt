@@ -1,0 +1,11 @@
+codificação.txt”
+MSB b15               b0 LSB
+      |               |
+ADD:  0100 ddd sss xxxx
+SUBI: 0101 ddd sss cccc
+...
+onde
+ddd  identifica o registrador destino
+sss  identifica o registrador fonte
+cccc identifica a constante de 4 bits em complemento de 2
+xxxx é irrelevante

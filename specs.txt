@@ -1,0 +1,13 @@
+Instruções OBRIGATÓRIAS a serem usadas na sua validação:
+{'ADD ctes': 'Há ADDI que pode somar com constante',
+ 'ADD ops': 'ADD com dois operandos apenas',
+ 'Acumulador ou não': 'ULA com acumulador',
+ 'Carga de constantes': 'Carrega diretamente com LD sem somar',
+ 'Comparações': 'CMP presente',
+ 'Flags obrigatórias': ['Carry', 'Overflow', 'Negative'],
+ 'SUB ctes': 'SUB apenas entre registradores',
+ 'SUB ops': 'SUB com dois operandos apenas',
+ 'Saltos': 'Incondicional é absoluto e condicional é relativo',
+ 'Subtração': 'SUBB unicamente com borrow',
+ 'Validação -- complicações': 'Instrução Halt ao final',
+ 'Validação -- final do loop': 'Loop com CJNE'}
