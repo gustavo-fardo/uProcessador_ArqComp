@@ -42,3 +42,5 @@ LD:  1100 0 ddd iiii iiii - LD Rn, imm : iiii iiii
      1100 1 xxx iiii iiii - LD A , imm
 
 JMP: 1111 x xxx iiii iiii - JMP imm
+
+NOP: 0000 x xxx xxxx xxxx - NOP
