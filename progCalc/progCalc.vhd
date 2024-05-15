@@ -24,6 +24,69 @@ architecture a_progCalc of progCalc is
         );
     end component;
 
+    component regBank is
+        port (
+            clk : in std_logic;
+            rst : in std_logic;
+            wr_en : in std_logic;
+            regWrite_add : in unsigned(2 downto 0);
+            regWrite_data : in unsigned(15 downto 0);
+            reg1_add : in unsigned(2 downto 0);
+            reg2_add : in unsigned(2 downto 0);
+            reg1_data : out unsigned(15 downto 0);
+            reg2_data : out unsigned(15 downto 0)
+        );
+    end component;
+
+    component reg16bits is
+        port (
+              clk : in std_logic;
+              rst : in std_logic;
+              wr_en : in std_logic;
+              data_in : in unsigned(15 downto 0);
+              data_out : out unsigned(15 downto 0)
+        );
+    
+
+  end component;
+
+    component ULA
+    port (
+        sel : in unsigned(1 downto 0);
+        ent_a : in unsigned(15 downto 0);
+        ent_b : in unsigned(15 downto 0);
+        saida : out unsigned(15 downto 0);
+        zero : out std_logic; --flag zero
+        carry : out std_logic; --flag carry
+        overflow_adder : out std_logic --flag overflow_adder
+    );
+    end component;
+
+    component PC is
+        port (
+            clk, wr_en, rst : in std_logic := '0';
+            data_in : in unsigned(2 downto 0) := "000";
+            data_out : out unsigned(2 downto 0) := "000"
+        );
+    end component;
+
+    component rom is
+        port (
+            clk : in std_logic;
+            address : in unsigned(2 downto 0);
+            data : out unsigned(11 downto 0)
+        );
+    end component;
+
+    component ctrlUnit is
+        port (
+            instr : in unsigned (11 downto 0) := "000000000000";
+            ULAsrcA, ULAsrcB, regWrite, memToReg, memRead, PCwrite, PCsource : out std_logic := '0';
+            ULAop : out unsigned (1 downto 0) := "00"
+        );
+    end component;
+
+
 begin
     sm_unit : sm_fet_dec_exe
     port map(
