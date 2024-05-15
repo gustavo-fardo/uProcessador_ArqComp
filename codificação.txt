@@ -19,26 +19,26 @@ xxxx é irrelevante
     rrr xxxxx = IMM
 
      10oo i ddd xxx
-ADD: 1000 0 ddd xxxx xxxx : ADD A, R1 , 
       ddd  identifica o registrador de origem 
-ADDI:1000 1 iii iiii iiii
+ msb15     10--8
+ADD: 1000 0 ddd xxxx xxxx - ADD A, R1  
+ADDI:1000 1 xxx iiii iiii - ADD A, imm    
 
-SUB: 1001 0 ddd xxxx xxxx : SUB A, Rn
-SUBI 1001 1 iii iiii iiii : SUBI A, imm
+SUB: 1001 0 ddd xxxx xxxx - SUB A, Rn
+SUBI 1001 1 xxx iiii iiii - SUBI A, imm
 
-AND: 1010 0 ddd xxxx xxxx : AND A, Rn
-ANDI 1001 1 iii iiii iiii : ANDI A, imm
+AND: 1010 0 ddd xxxx xxxx - AND A, Rn
+ANDI 1001 1 xxx iiii iiii - ANDI A, imm
 
-XOR: 1011 0 ddd xxxx xxxx : XOR A, Rn
-XORI 1011 1 iii iiii iiii : XORI A, imm
+XOR: 1011 0 ddd xxxx xxxx - XOR A, Rn
+XORI 1011 1 xxx iiii iiii - XORI A, imm
 
-CMP: 0001 0 ddd xxxx xxxx CMP A, Rn
-CMP: 0001 1 ddd xxxx xxxx CMP Rn, A
-      
+CMP: 0001 0 ddd xxxx xxxx - CMP A, Rn == CMP Rn, A (CMP diz se são iguais)      
 
-MV: 0100 0 ddd xxxx xxxx MV A,Rn
-    0100 1 ddd xxxx xxxx MV Rn,A
+MV:  0100 0 ddd xxxx xxxx - MV Rn,A
+     0100 1 ddd xxxx xxxx - MV A,Rn 
 
-LD: 1100 0 ddd iiii iiii LD Rn, imm 
-    1100 1 xxx iiii iiii LD A , imm
+LD:  1100 0 ddd iiii iiii - LD Rn, imm : iiii iiii
+     1100 1 xxx iiii iiii - LD A , imm
 
+JMP: 1111 x xxx iiii iiii - JMP imm
