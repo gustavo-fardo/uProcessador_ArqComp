@@ -5,15 +5,15 @@ use ieee.numeric_std.all;
 entity ctrlUnit is
     port (
         instr : in unsigned (15 downto 0) := "0000000000000000";
-        ULAop : out unsigned (1 downto 0) := "00" -- selecao de operacoes da ULA
+        ULAop : out unsigned (1 downto 0) := "00"; -- selecao de operacoes da ULA
         ULA_srcA : out std_logic := '0'; -- MUX source do RegA da ULA
         ULA_srcB : out std_logic := '0'; -- MUX source do RegB da ULA
-        regWr_en : out std_logic := '0'; -- wr_en do regBank
+        regBank_wr_en : out std_logic := '0'; -- wr_en do regBank
         regWr_src : out std_logic := '0'; -- MUX memória ou acumulador
-        regWr_address : out std_logic := out unsigned(2 downto 0) -- endereco banco de registradores
+        regWr_address : out unsigned(2 downto 0) := "000"; -- endereco banco de registradores
         ACM_wr_en : out std_logic := '0'; -- wr_en do ACM
         PC_src : out std_logic := '0'; -- MUX source do PC
-        PC_wr_en : out std_logic := '0'; -- wr_en do PC
+        PC_wr_en : out std_logic := '0' -- wr_en do PC
     );
 end entity;
 
@@ -21,12 +21,12 @@ architecture ctrlUnit_Arch of ctrlUnit is
 
     signal opcode : unsigned(3 downto 0);
     signal funct : std_logic := '0';
-    signal ULA_srcA : std_logic := '0';
+    -- signal ULA_srcA : std_logic := '0';
     signal ULA_op : unsigned(1 downto 0);
 begin
-    opcode <= instr(15 downto 11);
-    funct <= instr(10);
-    reg_address <= instr(10 downto 8);
+    opcode <= instr(15 downto 12);
+    funct <= instr(11);
+    regWr_address <= instr(10 downto 8);
 
     -- OP_ctrl
     ULA_op <= opcode(1 downto 0); -- instr(12 downto 11)
@@ -44,7 +44,7 @@ begin
         '0';
 
     -- 1 quando LD para Registrador e MOV para Registrador
-    regWr_en <= '1' when opcode = "0100" and funct = '0' else
+    regBank_wr_en <= '1' when opcode = "0100" and funct = '0' else
         '1' when opcode = "1100" and funct = '0' else
         '0';
 
