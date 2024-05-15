@@ -7,7 +7,7 @@ entity progCalc is
         clk, rst : in std_logic := '0';
         state : out unsigned(1 downto 0) := "00";
         PC_data : out unsigned(6 downto 0) := "0000000";
-        inst : out unsigned(15 downto 0) := "0000000000000000"; 
+        inst : out unsigned(15 downto 0) := "0000000000000000";
         reg1_data : out unsigned(15 downto 0) := "0000000000000000";
         reg2_data : out unsigned(15 downto 0) := "0000000000000000";
         ac_data : out unsigned(15 downto 0) := "0000000000000000";
@@ -40,26 +40,24 @@ architecture a_progCalc of progCalc is
 
     component reg16bits is
         port (
-              clk : in std_logic;
-              rst : in std_logic;
-              wr_en : in std_logic;
-              data_in : in unsigned(15 downto 0);
-              data_out : out unsigned(15 downto 0)
+            clk : in std_logic;
+            rst : in std_logic;
+            wr_en : in std_logic;
+            data_in : in unsigned(15 downto 0);
+            data_out : out unsigned(15 downto 0)
         );
-    
-
-  end component;
+    end component;
 
     component ULA
-    port (
-        sel : in unsigned(1 downto 0);
-        ent_a : in unsigned(15 downto 0);
-        ent_b : in unsigned(15 downto 0);
-        saida : out unsigned(15 downto 0);
-        zero : out std_logic; --flag zero
-        carry : out std_logic; --flag carry
-        overflow_adder : out std_logic --flag overflow_adder
-    );
+        port (
+            sel : in unsigned(1 downto 0);
+            ent_a : in unsigned(15 downto 0);
+            ent_b : in unsigned(15 downto 0);
+            saida : out unsigned(15 downto 0);
+            zero : out std_logic; --flag zero
+            carry : out std_logic; --flag carry
+            overflow_adder : out std_logic --flag overflow_adder
+        );
     end component;
 
     component PC is
@@ -74,19 +72,24 @@ architecture a_progCalc of progCalc is
         port (
             clk : in std_logic;
             address : in unsigned(7 downto 0);
-            data : out unsigned(11 downto 0)
+            data : out unsigned(15 downto 0)
         );
     end component;
 
     component ctrlUnit is
         port (
-            instr : in unsigned (11 downto 0) := "000000000000";
-            ULAsrcA, ULAsrcB, regWrite, memToReg, memRead, PCwrite, PCsource : out std_logic := '0';
-            ULAop : out unsigned (1 downto 0) := "00"
+            instr : in unsigned (15 downto 0) := "0000000000000000";
+            ULAop : out unsigned (1 downto 0) := "00"; -- selecao de operacoes da ULA
+            ULA_srcA : out std_logic := '0'; -- MUX source do RegA da ULA
+            ULA_srcB : out std_logic := '0'; -- MUX source do RegB da ULA
+            regBank_wr_en : out std_logic := '0'; -- wr_en do regBank
+            regWr_src : out std_logic := '0'; -- MUX memória ou acumulador
+            regWr_address : out unsigned(2 downto 0) := "000"; -- endereco banco de registradores
+            ACM_wr_en : out std_logic := '0'; -- wr_en do ACM
+            PC_src : out std_logic := '0'; -- MUX source do PC
+            PC_wr_en : out std_logic := '0' -- wr_en do PC
         );
     end component;
-
-
 begin
     sm_unit : sm_fet_dec_exe
     port map(

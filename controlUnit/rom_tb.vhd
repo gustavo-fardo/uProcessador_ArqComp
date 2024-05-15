@@ -10,12 +10,12 @@ architecture rom_tb_arch of rom_tb is
         port (
             clk : in std_logic;
             address : in unsigned(7 downto 0);
-            data : out unsigned(11 downto 0)
+            data : out unsigned(15 downto 0)
         );
     end component;
 
-    signal data : unsigned(11 downto 0) := "000000000000";
-    signal address : unsigned(2 downto 0) := "0000000";
+    signal data : unsigned(15 downto 0) := "0000000000000000";
+    signal address : unsigned(7 downto 0) := "00000000";
     signal clk : std_logic := '0';
 
     constant period_time : time := 100 ns;
@@ -48,15 +48,15 @@ begin
     process
     begin
         wait for period_time * 3;
-        address <= "0000001";
+        address <= "00000001";
         wait for period_time;
-        address <= "0000010";
+        address <= "00000010";
         wait for period_time;
-        address <= "0000011";
+        address <= "00000011";
         wait for period_time;
-        address <= "0000100";
+        address <= "00000100";
         wait for period_time;
-        address <= "0000101";
+        address <= "00000101";
         wait for 2 * period_time;
         wait;
     end process;

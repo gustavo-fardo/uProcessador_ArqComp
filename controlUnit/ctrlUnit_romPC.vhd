@@ -6,7 +6,7 @@ entity ctrlUnit_romPC is
     port (
         clk, rst : in std_logic;
         --instr : in unsigned (11 downto 0) :="000000000000";
-        ULAsrcA, ULAsrcB, regWrite, memToReg, memRead, PCwrite, PCsource : out std_logic;
+        ULA_srcA, ULA_srcB, regBank_wr_en, regWr_src, PC_wr_en, PC_src : out std_logic;
         ULAop : out unsigned (1 downto 0)
     );
 end entity;
@@ -15,17 +15,24 @@ architecture ctrlUnit_romPC_arch of ctrlUnit_romPC is
 
     component ctrlUnit is
         port (
-            instr : in unsigned (11 downto 0) := "000000000000";
-            ULAsrcA, ULAsrcB, regWrite, memToReg, memRead, PCwrite, PCsource : out std_logic := '0';
-            ULAop : out unsigned (1 downto 0) := "00"
+            instr : in unsigned (15 downto 0) := "0000000000000000";
+            ULAop : out unsigned (1 downto 0) := "00"; -- selecao de operacoes da ULA
+            ULA_srcA : out std_logic := '0'; -- MUX source do RegA da ULA
+            ULA_srcB : out std_logic := '0'; -- MUX source do RegB da ULA
+            regBank_wr_en : out std_logic := '0'; -- wr_en do regBank
+            regWr_src : out std_logic := '0'; -- MUX memória ou acumulador
+            regWr_address : out unsigned(2 downto 0) := "000"; -- endereco banco de registradores
+            ACM_wr_en : out std_logic := '0'; -- wr_en do ACM
+            PC_src : out std_logic := '0'; -- MUX source do PC
+            PC_wr_en : out std_logic := '0' -- wr_en do PC
         );
     end component;
 
     component romPC is
         port (
             clk_pc, clk_rom, wr_en, rst, jmp : in std_logic := '0';
-            PC_jmp_add : in unsigned(7 downto 0) := "0000000";
-            add_out : out unsigned(7 downto 0) := "0000000"; --espelhamento do PC
+            PC_jmp_add : in unsigned(7 downto 0) := "00000000";
+            add_out : out unsigned(7 downto 0) := "00000000"; --espelhamento do PC
             rom_data_out : out unsigned(11 downto 0) := "000000000000"
         );
     end component;
@@ -37,10 +44,10 @@ architecture ctrlUnit_romPC_arch of ctrlUnit_romPC is
         );
     end component;
 
-    signal PC_jmp_add : unsigned(7 downto 0) := "0000000";
-    signal add_out : unsigned(7 downto 0) := "0000000";
-    signal instr : unsigned (11 downto 0) := "000000000000";
-    signal ULAsrcA_s, ULAsrcB_s, regWrite_s, memToReg_s, memRead_s, PCwrite_s, PCsource_s : std_logic;
+    signal PC_jmp_add : unsigned(7 downto 0) := "00000000";
+    signal add_out : unsigned(7 downto 0) := "00000000";
+    signal instr : unsigned (15 downto 0) := "0000000000000000";
+    signal ULA_srcA_s, ULA_srcB_s, regBank_wr_en_s, regWr_src_s, PC_wr_en_s, PC_src_s : std_logic;
 
     -- signal clk , wr_en, rst , jmp :  std_logic :='0';
     constant period_time : time := 100 ns;
@@ -61,9 +68,9 @@ begin
     port map(
         clk_pc => execute,
         clk_rom => decode,
-        wr_en => PCwrite_s,
+        wr_en => PC_wr_en_s,
         rst => rst,
-        jmp => PCsource_s,
+        jmp => PC_src_s,
         PC_jmp_add => PC_jmp_add,
         add_out => add_out,
         rom_data_out => instr -- rom_data_out
@@ -74,13 +81,13 @@ begin
     ctrlUnit_cmp : ctrlUnit
     port map(
         instr => instr,
-        -- ULAsrcA, 
-        --ULAsrcB, 
-        --regWrite , 
-        --memToReg , 
-        --memRead , 
-        PCwrite => PCwrite_s,
-        PCsource => PCsource_s --,
+        -- ULA_srcA, 
+        --ULA_srcB, 
+        --regBank_wr_en  , 
+        --regWr_src , 
+        -- 
+        PC_wr_en => PC_wr_en_s,
+        PC_src => PC_src_s --,
         --ULAop 
     );
 

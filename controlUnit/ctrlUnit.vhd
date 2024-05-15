@@ -60,6 +60,6 @@ begin
 
     -- 1 quando JMP
     PC_src <= '1' when opcode = "1111" else
-    '0';
+        '0';
 
 end architecture;

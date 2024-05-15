@@ -11,12 +11,12 @@ architecture PC_add_tb_arch of PC_add_tb is
         port (
             clk, wr_en, rst : in std_logic := '0';
             --data_in : in unsigned(15 downto 0) :="0000000000000000"
-            data_out : out unsigned(7 downto 0) := "0000000"
+            data_out : out unsigned(7 downto 0) := "00000000"
 
         );
     end component;
 
-    signal data_out : unsigned(7 downto 0) := "0000000";
+    signal data_out : unsigned(7 downto 0) := "00000000";
 
     signal clk, wr_en, rst : std_logic := '0';
 

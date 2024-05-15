@@ -10,7 +10,7 @@ architecture ctrlUnit_romPC_tb_arch of ctrlUnit_romPC_tb is
         port (
             clk, rst : in std_logic;
             --instr : in unsigned (11 downto 0) :="000000000000";
-            ULAsrcA, ULAsrcB, regWrite, memToReg, memRead, PCwrite, PCsource : out std_logic;
+            ULA_srcA, ULA_srcB, regBank_wr_en, regWr_src, PC_wr_en, PC_src : out std_logic;
             ULAop : out unsigned (1 downto 0)
         );
     end component;
@@ -26,7 +26,7 @@ begin
     port map(
         clk, rst --,
         --instr : in unsigned (11 downto 0) :="000000000000";
-        --ULAsrcA, ULAsrcB, regWrite , memToReg , memRead , PCwrite , PCsource  : out std_logic ;
+        --ULA_srcA, ULA_srcB, regBank_wr_en  , regWr_src ,  PC_wr_en , PC_src  : out std_logic ;
         --ULAop : out unsigned (1 downto 0) 
     );
     -- process    -- sinal de reset
