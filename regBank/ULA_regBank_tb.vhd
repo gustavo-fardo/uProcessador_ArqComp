@@ -13,7 +13,7 @@ architecture ULA_regBank_tb_a of ULA_regBank_tb is
             clk : in std_logic;
             rst : in std_logic;
             wr_en : in std_logic;
-            regWrite_add : in unsigned(2 downto 0);
+            wr_add : in unsigned(2 downto 0);
             ct_data : in unsigned(15 downto 0);
             reg1_add : in unsigned(2 downto 0);
             reg2_add : in unsigned(2 downto 0);
@@ -29,7 +29,7 @@ architecture ULA_regBank_tb_a of ULA_regBank_tb is
     signal clk : std_logic := '0';
     signal rst : std_logic := '0';
     signal wr_en : std_logic := '0';
-    signal regWrite_add : unsigned(2 downto 0) := "000";
+    signal wr_add : unsigned(2 downto 0) := "000";
     signal ct_data : unsigned(15 downto 0) := "0000000000000000";
     signal reg1_add : unsigned(2 downto 0) := "000";
     signal reg2_add : unsigned(2 downto 0) := "000";
@@ -48,7 +48,7 @@ begin
         clk,
         rst,
         wr_en,
-        regWrite_add,
+        wr_add,
         ct_data,
         reg1_add,
         reg2_add,
@@ -89,7 +89,7 @@ begin
     begin
         wait for period_time * 3;
         wr_en <= '1';
-        regWrite_add <= "100";--carrega em x8 0x000F
+        wr_add <= "100";--carrega em x8 0x000F
         ct_data <= "0000000000001111";
         reg1_add <= "000";
         reg2_add <= "000";
@@ -98,7 +98,7 @@ begin
         ULAsrc <= '1';
         wait for period_time;
         wr_en <= '1';
-        regWrite_add <= "010";
+        wr_add <= "010";
         ct_data <= "0000000011110000";--soma reg x8 com constante 0x00F0 e armazena em x4
         reg1_add <= "100";
         reg2_add <= "000";
@@ -107,7 +107,7 @@ begin
         ULAsrc <= '1';
         wait for period_time;
         wr_en <= '1';
-        regWrite_add <= "001";
+        wr_add <= "001";
         ct_data <= "0000000000001111";-- faz operacao reg x8 subtracao reg x4 e carrega em reg x1
         reg1_add <= "100";
         reg2_add <= "010";

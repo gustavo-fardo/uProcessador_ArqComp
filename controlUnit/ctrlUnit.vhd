@@ -4,51 +4,62 @@ use ieee.numeric_std.all;
 
 entity ctrlUnit is
     port (
-        instr : in unsigned (11 downto 0) := "000000000000";
-        ULA_src : out std_logic := '0'; -- MUX source do RegA da ULA
-        regWr_en: out std_logic := '0'; -- wr_en do regBank
+        instr : in unsigned (15 downto 0) := "0000000000000000";
+        ULAop : out unsigned (1 downto 0) := "00" -- selecao de operacoes da ULA
+        ULA_srcA : out std_logic := '0'; -- MUX source do RegA da ULA
+        ULA_srcB : out std_logic := '0'; -- MUX source do RegB da ULA
+        regWr_en : out std_logic := '0'; -- wr_en do regBank
         regWr_src : out std_logic := '0'; -- MUX memória ou acumulador
+        regWr_address : out std_logic := out unsigned(2 downto 0) -- endereco banco de registradores
+        ACM_wr_en : out std_logic := '0'; -- wr_en do ACM
         PC_src : out std_logic := '0'; -- MUX source do PC
         PC_wr_en : out std_logic := '0'; -- wr_en do PC
-        ACM_wr_en : out std_logic := '0'; -- wr_en do ACM
-        ACM_src : out std_logic := '0'; -- MUX source do ACM
-        ULAop : out unsigned (1 downto 0) := "00" -- selecao de operacoes da ULA
     );
 end entity;
 
 architecture ctrlUnit_Arch of ctrlUnit is
 
     signal opcode : unsigned(3 downto 0);
-
+    signal funct : std_logic := '0';
+    signal ULA_srcA : std_logic := '0';
+    signal ULA_op : unsigned(1 downto 0);
 begin
-    opcode <= instr(11 downto 8);
+    opcode <= instr(15 downto 11);
+    funct <= instr(10);
+    reg_address <= instr(10 downto 8);
 
-    PC_src <= '1' when opcode = "1111" else -- PCsrc será nosso jump_en
+    -- OP_ctrl
+    ULA_op <= opcode(1 downto 0); -- instr(12 downto 11)
+
+    -- funct = 1 (com imediato)
+    ULA_srcA <= funct;
+
+    -- 1 quando LD para Acumulador ou Mov para Acumulador (Reg ZERO)
+    ULA_srcB <= '1' when opcode = "0100" and funct = '1' else
+        '1' when opcode = "1100" and funct = '1' else
         '0';
 
-    -- ULA_src <=  '0' when opcode="0000" else
-    --             '0' when opcode="0001" else
-    --             '0' when opcode="0010" else
-    --             '0' when opcode="0011" else
-    --             '1';
-    
-    -- ULAsrcB <=  '0' when opcode="0000" else
-    --             '0' when opcode="0001" else
-    --             '0' when opcode="0010" else
-    --             '0' when opcode="0011" else
-    --             '1';
-    -- ULAop <="00" when opcode="0000" else
-    --         "01" when opcode="0001" else
-    --         "10" when opcode="0010" else
-    --         "11" when opcode="0011" else
-    --         "00";   
+    -- 1 quando LD para Registrador
+    regWr_src <= '1' when opcode = "1100" and funct = '0' else
+        '0';
 
-    regWrite <= '1';
-    memToReg <= '1';
-    memRead <= '1';
-    PCwrite <= '1';
-    ULAsrcA <= '0';
-    ULAsrcB <= '0';
-    ULAop <= "00";
+    -- 1 quando LD para Registrador e MOV para Registrador
+    regWr_en <= '1' when opcode = "0100" and funct = '0' else
+        '1' when opcode = "1100" and funct = '0' else
+        '0';
+
+    --- 0 quando CMP, LD para Registrador, MOV para Registrador e JMP
+    ACM_wr_en <= '0' when opcode = "0001" and funct = '0' else
+        '0' when opcode = "0100" and funct = '0' else
+        '0' when opcode = "1100" and funct = '0' else
+        '0' when opcode = "1111" else
+        '1';
+
+    -- Sempre, por enquanto
+    PC_wr_en <= '1';
+
+    -- 1 quando JMP
+    PC_src <= '1' when opcode = "1111" else
+    '0';
 
 end architecture;

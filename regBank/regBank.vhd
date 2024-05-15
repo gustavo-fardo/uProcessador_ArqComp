@@ -10,8 +10,8 @@ entity regBank is
             clk : in std_logic;
             rst : in std_logic;
             wr_en : in std_logic;
-            regWrite_add : in unsigned(2 downto 0);
-            regWrite_data : in unsigned(15 downto 0);
+            wr_add : in unsigned(2 downto 0);
+            wr_data : in unsigned(15 downto 0);
             reg1_add : in unsigned(2 downto 0);
             reg2_add : in unsigned(2 downto 0);
             reg1_data : out unsigned(15 downto 0);
@@ -48,8 +48,8 @@ architecture regBank_arch of regBank is
 
       ----SIGNAL----
       signal regs_data_array : muxInput_t;
-      -- signal regWrite_add_s , reg1_add_s, reg2_add_s   :  unsigned(3 downto 0); 
-      --signal regWrite_data, reg1_data_s , reg2_data_s  :  unsigned(15 downto 0);
+      -- signal wr_add_s , reg1_add_s, reg2_add_s   :  unsigned(3 downto 0); 
+      --signal wr_data, reg1_data_s , reg2_data_s  :  unsigned(15 downto 0);
       signal wr_en_s : std_logic_vector(7 downto 0);
 
 begin
@@ -60,7 +60,7 @@ begin
                   clk => clk,
                   rst => rst,
                   wr_en => wr_en_s(i),
-                  data_in => regWrite_data,
+                  data_in => wr_data,
                   data_out => regs_data_array(i)
             );
       end generate;
@@ -75,7 +75,7 @@ begin
 
       demux_wr_en : demux8_1bits
       port map(
-            demuxInput => regWrite_add,
+            demuxInput => wr_add,
             demuxCtrl => wr_en,
             demuxOut => wr_en_s
       );

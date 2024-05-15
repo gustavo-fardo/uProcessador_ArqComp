@@ -11,7 +11,7 @@ entity ULA_regBank is
         clk : in std_logic;
         rst : in std_logic;
         wr_en : in std_logic;
-        regWrite_add : in unsigned(2 downto 0);
+        wr_add : in unsigned(2 downto 0);
         ct_data : in unsigned(15 downto 0);
         reg1_add : in unsigned(2 downto 0);
         reg2_add : in unsigned(2 downto 0);
@@ -30,8 +30,8 @@ architecture ULA_regBank_arch of ULA_regBank is
             clk : in std_logic;
             rst : in std_logic;
             wr_en : in std_logic;
-            regWrite_add : in unsigned(2 downto 0);
-            regWrite_data : in unsigned(15 downto 0);
+            wr_add : in unsigned(2 downto 0);
+            wr_data : in unsigned(15 downto 0);
             reg1_add : in unsigned(2 downto 0);
             reg2_add : in unsigned(2 downto 0);
             reg1_data : out unsigned(15 downto 0);
@@ -68,7 +68,7 @@ architecture ULA_regBank_arch of ULA_regBank is
         );
     end component;
 
-    signal regWrite_add_s, regWrite_add_mux : unsigned (2 downto 0);
+    signal wr_add_s, wr_add_mux : unsigned (2 downto 0);
     signal ULA_in2_s, ULA_out_s, reg1_data_s, reg2_data_s : unsigned (15 downto 0);
     signal muxInput2 : muxInput2_t;
     signal muxInput3 : muxInput3_t;
@@ -78,7 +78,7 @@ begin
         clk,
         rst,
         wr_en,
-        regWrite_add_mux,
+        wr_add_mux,
         ULA_out_s,
         reg1_add,
         reg2_add,
@@ -95,15 +95,15 @@ begin
     muxInput2(1) <= ct_data;
     muxInput2(0) <= reg2_data_s;
 
-    muxInput3(1) <= regWrite_add_s;
+    muxInput3(1) <= wr_add_s;
     muxInput3(0) <= reg2_add;
 
     muxREGSin : mux2_3bits
     port map(
-        --muxInput(1)=> regWrite_add_s, muxInput(0)=>reg2_add ,
+        --muxInput(1)=> wr_add_s, muxInput(0)=>reg2_add ,
         muxInput => muxInput3,
         muxCtrl => reg_Dst,
-        muxOut => regWrite_add_mux
+        muxOut => wr_add_mux
     );
 
     ULA00 : ULA
@@ -116,7 +116,7 @@ begin
         --carry =>carry,
         --overflow_adder=> overflow_adder
     );
-    regWrite_add_s <= regWrite_add;
+    wr_add_s <= wr_add;
     reg1_data <= reg1_data_s;
     reg2_data <= reg2_data_s;
     ULAout <= ULA_out_s;

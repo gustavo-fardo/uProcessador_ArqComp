@@ -29,8 +29,8 @@ architecture a_progCalc of progCalc is
             clk : in std_logic;
             rst : in std_logic;
             wr_en : in std_logic;
-            regWrite_add : in unsigned(2 downto 0);
-            regWrite_data : in unsigned(15 downto 0);
+            wr_add : in unsigned(2 downto 0);
+            wr_data : in unsigned(15 downto 0);
             reg1_add : in unsigned(2 downto 0);
             reg2_add : in unsigned(2 downto 0);
             reg1_data : out unsigned(15 downto 0);
@@ -93,5 +93,9 @@ begin
         clk, rst,
         state
     );
+
+    --clk_0 (ROM) => fetch
+    --clk_1 (REG_Bank) => decode
+    --clk_2 (ACM e PC) => execute
 
 end architecture;
