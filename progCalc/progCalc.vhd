@@ -6,7 +6,7 @@ entity progCalc is
     port (
         clk, rst : in std_logic := '0';
         state : out unsigned(1 downto 0) := "00";
-        PC : out unsigned(6 downto 0) := "0000000";
+        PC_data : out unsigned(6 downto 0) := "0000000";
         inst : out unsigned(15 downto 0) := "0000000000000000"; 
         reg1_data : out unsigned(15 downto 0) := "0000000000000000";
         reg2_data : out unsigned(15 downto 0) := "0000000000000000";
@@ -73,7 +73,7 @@ architecture a_progCalc of progCalc is
     component rom is
         port (
             clk : in std_logic;
-            address : in unsigned(2 downto 0);
+            address : in unsigned(7 downto 0);
             data : out unsigned(11 downto 0)
         );
     end component;

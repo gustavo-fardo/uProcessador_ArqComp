@@ -4,7 +4,7 @@ use ieee.numeric_std.all;
 entity rom is
    port (
       clk : in std_logic;
-      address : in unsigned(2 downto 0);
+      address : in unsigned(7 downto 0);
       data : out unsigned(11 downto 0)
    );
 end entity;

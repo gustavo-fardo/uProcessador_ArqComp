@@ -6,7 +6,7 @@ entity PC_add is
     port (
         clk, wr_en, rst : in std_logic := '0';
         --data_in : in unsigned(15 downto 0) := "0000000000000000"
-        data_out : out unsigned(2 downto 0) := "000"
+        data_out : out unsigned(7 downto 0) := "000"
     );
 end entity;
 
@@ -14,12 +14,12 @@ architecture PC_add_Arch of PC_add is
     component PC is
         port (
             clk, wr_en, rst : in std_logic := '0';
-            data_in : in unsigned(2 downto 0) := "000";
-            data_out : out unsigned(2 downto 0) := "000"
+            data_in : in unsigned(7 downto 0) := "0000000";
+            data_out : out unsigned(7 downto 0) := "0000000"
         );
     end component;
 
-    signal data_out_s, data_in : unsigned(2 downto 0) := "000";
+    signal data_out_s, data_in : unsigned(7 downto 0) := "0000000";
     signal rst_s : std_logic := '0';
 
 begin

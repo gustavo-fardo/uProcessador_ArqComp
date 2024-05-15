@@ -24,9 +24,8 @@ architecture ctrlUnit_romPC_arch of ctrlUnit_romPC is
     component romPC is
         port (
             clk_pc, clk_rom, wr_en, rst, jmp : in std_logic := '0';
-            -- PC_jmp_add : in unsigned(15 downto 0) :="0000000000000000";
-            PC_jmp_add : in unsigned(2 downto 0) := "000";
-            add_out : out unsigned(2 downto 0) := "000"; --espelhamento do PC
+            PC_jmp_add : in unsigned(7 downto 0) := "0000000";
+            add_out : out unsigned(7 downto 0) := "0000000"; --espelhamento do PC
             rom_data_out : out unsigned(11 downto 0) := "000000000000"
         );
     end component;
@@ -38,9 +37,8 @@ architecture ctrlUnit_romPC_arch of ctrlUnit_romPC is
         );
     end component;
 
-    -- signal PC_jmp_add : in unsigned(15 downto 0) :="0000000000000000";
-    signal PC_jmp_add : unsigned(2 downto 0) := "000";
-    signal add_out : unsigned(2 downto 0) := "000";
+    signal PC_jmp_add : unsigned(7 downto 0) := "0000000";
+    signal add_out : unsigned(7 downto 0) := "0000000";
     signal instr : unsigned (11 downto 0) := "000000000000";
     signal ULAsrcA_s, ULAsrcB_s, regWrite_s, memToReg_s, memRead_s, PCwrite_s, PCsource_s : std_logic;
 

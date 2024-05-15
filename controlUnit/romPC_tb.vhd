@@ -10,17 +10,14 @@ architecture romPC_tb_arch of romPC_tb is
     component romPC is
         port (
             clk_pc, clk_rom, wr_en, rst, jmp : in std_logic := '0';
-            -- PC_jmp_add : in unsigned(15 downto 0) :="0000000000000000";
-            PC_jmp_add : in unsigned(2 downto 0) := "000";
-            -- add_out : out unsigned(15 downto 0) :="0000000000000000";
-            add_out : out unsigned(2 downto 0) := "000";
+            PC_jmp_add : in unsigned(7 downto 0) := "0000000";
+            add_out : out unsigned(7 downto 0) := "0000000";
             rom_data_out : out unsigned(11 downto 0) := "000000000000"
         );
     end component;
 
-    -- signal PC_jmp_add : in unsigned(15 downto 0) :="0000000000000000";
-    signal PC_jmp_add : unsigned(2 downto 0) := "000";
-    signal add_out : unsigned(2 downto 0) := "000";
+    signal PC_jmp_add : unsigned(7 downto 0) := "0000000";
+    signal add_out : unsigned(7 downto 0) := "0000000";
     signal rom_data_out : unsigned(11 downto 0) := "000000000000";
     signal clk, wr_en, rst, jmp : std_logic := '0';
 
