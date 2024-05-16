@@ -1,0 +1,33 @@
+[*]
+[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
+[*] Thu May 16 02:56:57 2024
+[*]
+[dumpfile] "/home/gustavo/Documents/ArComp/VHDL/uProcessador/progCalc_tb.ghw"
+[dumpfile_mtime] "Thu May 16 02:29:45 2024"
+[dumpfile_size] 25653
+[savefile] "/home/gustavo/Documents/ArComp/VHDL/uProcessador/progCalc_tb.gtkw"
+[timestart] 0
+[size] 1011 667
+[pos] 126 26
+*-29.000000 1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.progcalc_tb.
+[sst_width] 233
+[signals_width] 150
+[sst_expanded] 1
+[sst_vpaned_height] 167
+@28
+top.progcalc_tb.clk
+top.progcalc_tb.rst
+top.progcalc_tb.finished
+#{top.progcalc_tb.state[1:0]} top.progcalc_tb.state[1] top.progcalc_tb.state[0]
+@22
+#{top.progcalc_tb.pc_data[7:0]} top.progcalc_tb.pc_data[7] top.progcalc_tb.pc_data[6] top.progcalc_tb.pc_data[5] top.progcalc_tb.pc_data[4] top.progcalc_tb.pc_data[3] top.progcalc_tb.pc_data[2] top.progcalc_tb.pc_data[1] top.progcalc_tb.pc_data[0]
+@28
+#{top.progcalc_tb.inst[15:0]} top.progcalc_tb.inst[15] top.progcalc_tb.inst[14] top.progcalc_tb.inst[13] top.progcalc_tb.inst[12] top.progcalc_tb.inst[11] top.progcalc_tb.inst[10] top.progcalc_tb.inst[9] top.progcalc_tb.inst[8] top.progcalc_tb.inst[7] top.progcalc_tb.inst[6] top.progcalc_tb.inst[5] top.progcalc_tb.inst[4] top.progcalc_tb.inst[3] top.progcalc_tb.inst[2] top.progcalc_tb.inst[1] top.progcalc_tb.inst[0]
+@22
+#{top.progcalc_tb.reg1_data[15:0]} top.progcalc_tb.reg1_data[15] top.progcalc_tb.reg1_data[14] top.progcalc_tb.reg1_data[13] top.progcalc_tb.reg1_data[12] top.progcalc_tb.reg1_data[11] top.progcalc_tb.reg1_data[10] top.progcalc_tb.reg1_data[9] top.progcalc_tb.reg1_data[8] top.progcalc_tb.reg1_data[7] top.progcalc_tb.reg1_data[6] top.progcalc_tb.reg1_data[5] top.progcalc_tb.reg1_data[4] top.progcalc_tb.reg1_data[3] top.progcalc_tb.reg1_data[2] top.progcalc_tb.reg1_data[1] top.progcalc_tb.reg1_data[0]
+#{top.progcalc_tb.ac_data[15:0]} top.progcalc_tb.ac_data[15] top.progcalc_tb.ac_data[14] top.progcalc_tb.ac_data[13] top.progcalc_tb.ac_data[12] top.progcalc_tb.ac_data[11] top.progcalc_tb.ac_data[10] top.progcalc_tb.ac_data[9] top.progcalc_tb.ac_data[8] top.progcalc_tb.ac_data[7] top.progcalc_tb.ac_data[6] top.progcalc_tb.ac_data[5] top.progcalc_tb.ac_data[4] top.progcalc_tb.ac_data[3] top.progcalc_tb.ac_data[2] top.progcalc_tb.ac_data[1] top.progcalc_tb.ac_data[0]
+#{top.progcalc_tb.ulaout[15:0]} top.progcalc_tb.ulaout[15] top.progcalc_tb.ulaout[14] top.progcalc_tb.ulaout[13] top.progcalc_tb.ulaout[12] top.progcalc_tb.ulaout[11] top.progcalc_tb.ulaout[10] top.progcalc_tb.ulaout[9] top.progcalc_tb.ulaout[8] top.progcalc_tb.ulaout[7] top.progcalc_tb.ulaout[6] top.progcalc_tb.ulaout[5] top.progcalc_tb.ulaout[4] top.progcalc_tb.ulaout[3] top.progcalc_tb.ulaout[2] top.progcalc_tb.ulaout[1] top.progcalc_tb.ulaout[0]
+[pattern_trace] 1
+[pattern_trace] 0

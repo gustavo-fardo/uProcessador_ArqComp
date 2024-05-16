@@ -39,6 +39,7 @@ begin
         rst,
         state,
         PC_data,
+        inst,
         reg1_data,
         reg2_data,
         ac_data,
