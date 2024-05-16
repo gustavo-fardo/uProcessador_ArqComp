@@ -1,5 +1,7 @@
-LD  R3,0x05
-LD  R4,0x08
+A: 
+    LD  R3,0x05
+B:
+    LD  R4,0x08
 C:  #o passo C precisa de 3 instruções neste meu μProcessador
     MOV A, zero (ou pode ser MOV A, zero)
     ADD A,R4
@@ -8,8 +10,8 @@ C:  #o passo C precisa de 3 instruções neste meu μProcessador
 D: 
     SUBI A,1
     MOV R5,A
-
-JMP 0x14
+E:
+    JMP 0x14
 F:
     LD R3,0x00 (ou pode ser MV A, zero)
 vazio:
@@ -24,9 +26,10 @@ vazio:
     NOP
     NOP
 G:
-   MOV A,R5
-   MOV R3,A
-JMP 0x02 # endereço de C
+    MOV A,R5
+    MOV R3,A
+H:
+    JMP 0x02 # endereço de C
 I:
     LD R3,0x00
 

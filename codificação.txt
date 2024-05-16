@@ -35,7 +35,7 @@ XORI 1011 1 xxx iiii iiii - XORI A, imm
 
 CMP: 0001 0 ddd xxxx xxxx - CMP A, Rn == CMP Rn, A (CMP diz se são iguais)      
 
-MV:  0100 0 ddd xxxx xxxx - MV Rn,A
+MOV: 0100 0 ddd xxxx xxxx - MV Rn,A
      0100 1 ddd xxxx xxxx - MV A,Rn 
 
 LD:  1100 0 ddd iiii iiii - LD Rn, imm : iiii iiii
