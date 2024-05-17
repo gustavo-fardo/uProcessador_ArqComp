@@ -128,11 +128,11 @@ begin
     --clk_1 (REG_Bank) => decode
     --clk_2 (ACM e PC) => execute
     state <= state_s;
-    fetch <= '1' when state_s = "00" else
+    fetch <= '1' when state_s = "10" else
         '0';
     decode <= '1' when state_s = "01" else
         '0';
-    execute <= '1' when state_s = "10" else
+    execute <= '1' when state_s = "00" else
         '0';
 
     -- muxPC
@@ -196,10 +196,10 @@ begin
     --- reg2_data
 
     -- muxULAa
-    ULAentA_s <= ext_immediate when ULA_srcA_s = '1' else
+    ULAentB_s <= ext_immediate when ULA_srcA_s = '1' else
         reg1_data_s;
     -- muxULAb
-    ULAentB_s <= "0000000000000000" when ULA_srcB_s = '1' else
+    ULAentA_s <= "0000000000000000" when ULA_srcB_s = '1' else
         ACM_data_s;
 
     ULA_unit : ULA
