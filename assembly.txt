@@ -1,26 +1,50 @@
-A:  LD  R3,0x05
+﻿A:  LD  R3,0x05
+
 B:  LD  R4,0x08
+
 C:  MOV A, zero (ou pode ser MOV A, zero)
-    ADD A,R4
-    ADD A,R3
-    MOV R5,A
-D:  SUBI A,1
-    MOV R5,A
+    
+ADD A,R4
+    
+ADD A,R3
+    
+MOV R5,A
+
+D:
+MOV R7,1  
+SUB A,R7    
+MOV R5,A
+
 E:  JMP 0x14
+
 F:  LD R3,0x00 (ou pode ser MV A, zero)
-    NOP
-    NOP
-    NOP
-    NOP
-    NOP
-    NOP
-    NOP
-    NOP
-    NOP
-    NOP
+   
+NOP
+    
+NOP
+    
+NOP
+    
+NOP
+    
+NOP
+    
+NOP
+    
+NOP
+    
+NOP
+    
+NOP
+    
+NOP
+
 G:  MOV A,R5
-    MOV R3,A
+    
+MOV R3,A
+
 H:  JMP 0x02 # endereço de C
+
 I:  LD R3,0x00
 
 
