@@ -22,17 +22,18 @@ architecture ctrlUnit_Arch of ctrlUnit is
     signal opcode : unsigned(3 downto 0);
     signal funct : std_logic := '0';
     -- signal ULA_srcA : std_logic := '0';
-    signal ULA_op : unsigned(1 downto 0);
 begin
     opcode <= instr(15 downto 12);
     funct <= instr(11);
     regWr_address <= instr(10 downto 8);
 
     -- OP_ctrl
-    ULA_op <= opcode(1 downto 0); -- instr(12 downto 11)
+    ULAop <= "01" when opcode="1001" else
+             "00"; -- instr(12 downto 11)
 
     -- funct = 1 (com imediato)
-    ULA_srcA <= funct;
+    ULA_srcA <= '0' when opcode="0100" else
+                funct;
 
     -- 1 quando LD para Acumulador ou Mov para Acumulador (Reg ZERO)
     ULA_srcB <= '1' when opcode = "0100" and funct = '1' else
