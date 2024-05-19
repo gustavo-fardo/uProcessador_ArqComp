@@ -91,31 +91,37 @@ architecture a_progCalc of progCalc is
         );
     end component;
 
+    -- sinais de clock
     signal fetch : std_logic := '0';
+    signal wr_inst_reg : std_logic := '0';
     signal decode : std_logic := '0';
     signal execute : std_logic := '0';
 
+    -- extensão de imediato
+    signal immediate : unsigned(7 downto 0) := "00000000";
+    signal ext_signal : unsigned(7 downto 0) := "00000000";
+    signal ext_immediate : unsigned(15 downto 0) := "0000000000000000";
+
+    -- sinais de conexão
     signal state_s : unsigned(1 downto 0) := "00";
+    signal PC_src_s : std_logic := '0'; -- MUX source do PC
+    signal PC_wr_en_s : std_logic := '0'; -- wr_en do PC
     signal PC_in_s : unsigned(7 downto 0) := "00000000";
     signal PC_out_s : unsigned(7 downto 0) := "00000000";
     signal ROM_data_s : unsigned(15 downto 0) := "0000000000000000";
-    signal ULAop_s : unsigned (1 downto 0) := "00";
-    signal ULA_srcA_s : std_logic := '0'; -- MUX source do RegA da ULA
-    signal ULA_srcB_s : std_logic := '0'; -- MUX source do RegB da ULA
+    signal inst_reg_out_s : unsigned(15 downto 0) := "0000000000000000";
     signal regBank_wr_en_s : std_logic := '0'; -- wr_en do regBank
     signal regWr_src_s : std_logic := '0'; -- MUX memória ou acumulador
     signal regWr_address_s : unsigned(2 downto 0) := "000"; -- endereco banco de registradores
     signal regWr_data_s : unsigned(15 downto 0) := "0000000000000000";
-    signal ACM_wr_en_s : std_logic := '0'; -- wr_en do ACM
-    signal PC_src_s : std_logic := '0'; -- MUX source do PC
-    signal PC_wr_en_s : std_logic := '0'; -- wr_en do PC
     signal reg1_data_s : unsigned(15 downto 0) := "0000000000000000";
-    signal ACM_data_s : unsigned(15 downto 0) := "0000000000000000";
+    signal ULAop_s : unsigned (1 downto 0) := "00";
+    signal ULA_srcA_s : std_logic := '0'; -- MUX source do RegA da ULA
+    signal ULA_srcB_s : std_logic := '0'; -- MUX source do RegB da ULA
     signal ULAentA_s, ULAentB_s, ULAout_s : unsigned(15 downto 0) := "0000000000000000";
+    signal ACM_wr_en_s : std_logic := '0'; -- wr_en do ACM
+    signal ACM_data_s : unsigned(15 downto 0) := "0000000000000000";
 
-    signal immediate : unsigned(7 downto 0) := "00000000";
-    signal ext_signal : unsigned(7 downto 0) := "00000000";
-    signal ext_immediate : unsigned(15 downto 0) := "0000000000000000";
 begin
     sm_unit : sm_fet_dec_exe
     port map(
@@ -128,11 +134,13 @@ begin
     --clk_1 (REG_Bank) => decode
     --clk_2 (ACM e PC) => execute
     state <= state_s;
-    fetch <= '1' when state_s = "10" else
+    fetch <= '1' when state_s = "00" else
         '0';
-    decode <= '1' when state_s = "01" else
+    wr_inst_reg <= '1' when state_s = "01" else
         '0';
-    execute <= '1' when state_s = "00" else
+    decode <= '1' when state_s = "10" else
+        '0';
+    execute <= '1' when state_s = "11" else
         '0';
 
     -- muxPC
@@ -155,7 +163,16 @@ begin
         address => PC_out_s,
         data => ROM_data_s
     );
-    inst <= ROM_data_s;
+
+    inst_reg_unit : reg16bits
+    port map(
+        clk => wr_inst_reg,
+        rst => rst,
+        wr_en => '1',
+        data_in => ROM_data_s,
+        data_out => inst_reg_out_s
+    );
+    inst <= inst_reg_out_s;
 
     immediate <= ROM_data_s(7 downto 0);
     ext_signal <= "11111111" when ROM_data_s(7) = '1' else
@@ -164,7 +181,7 @@ begin
 
     ctrl_unit : ctrlUnit
     port map(
-        instr => ROM_data_s,
+        instr => inst_reg_out_s,
         ULAop => ULAop_s,
         ULA_srcA => ULA_srcA_s,
         ULA_srcB => ULA_srcB_s,
