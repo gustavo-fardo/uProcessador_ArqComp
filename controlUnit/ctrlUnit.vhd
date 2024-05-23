@@ -21,19 +21,19 @@ architecture ctrlUnit_Arch of ctrlUnit is
 
     signal opcode : unsigned(3 downto 0);
     signal funct : std_logic := '0';
-    -- signal ULA_srcA : std_logic := '0';
+
 begin
     opcode <= instr(15 downto 12);
     funct <= instr(11);
     regWr_address <= instr(10 downto 8);
 
-    -- OP_ctrl
-    ULAop <= "01" when opcode="1001" else
-             "00"; -- instr(12 downto 11)
+    -- OP_ctrl (só soma e sub)
+    ULAop <= "01" when opcode = "1001" else
+        "00";
 
     -- funct = 1 (com imediato)
-    ULA_srcA <= '0' when opcode="0100" else
-                funct;
+    ULA_srcA <= '0' when opcode = "0100" else
+        funct;
 
     -- 1 quando LD para Acumulador ou Mov para Acumulador (Reg ZERO)
     ULA_srcB <= '1' when opcode = "0100" and funct = '1' else
@@ -49,11 +49,12 @@ begin
         '1' when opcode = "1100" and funct = '0' else
         '0';
 
-    --- 0 quando CMP, LD para Registrador, MOV para Registrador e JMP
+    --- 0 quando CMP, LD para Registrador, MOV para Registrador, JMP e CMP
     ACM_wr_en <= '0' when opcode = "0001" and funct = '0' else
         '0' when opcode = "0100" and funct = '0' else
         '0' when opcode = "1100" and funct = '0' else
         '0' when opcode = "1111" else
+        '0' when opcode = "0001"
         '1';
 
     -- Sempre, por enquanto
