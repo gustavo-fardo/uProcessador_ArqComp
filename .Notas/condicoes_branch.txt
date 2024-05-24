@@ -1,0 +1,6 @@
+BEQ => Zero AND NOT Overflow
+BNE => NOT Zero AND NOT Overflow
+BLT => Negative AND NOT Zero AND NOT Overflow
+BGE => NOT Negative OR Zero 
+BNC => NOT Carry
+BC  => Carry

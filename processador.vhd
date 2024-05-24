@@ -118,7 +118,9 @@ architecture a_processador of processador is
     signal ULAop_s : unsigned (1 downto 0) := "00";
     signal ULA_srcA_s : std_logic := '0'; -- MUX source do RegA da ULA
     signal ULA_srcB_s : std_logic := '0'; -- MUX source do RegB da ULA
-    signal ULAentA_s, ULAentB_s, ULAout_s : unsigned(15 downto 0) := "0000000000000000";
+    signal ULAentA_s, ULAentB_s, ULAout_s : unsigned(15 downto 0) := "0000000000000000"; -- ULA
+    signal flags_in_s, flags_out_s : unsigned(15 downto 0) := "0000000000000000"; -- flags
+    signal flag_wr_en : std_logic := '0'; -- wr_en do flag
     signal ACM_wr_en_s : std_logic := '0'; -- wr_en do ACM
     signal ACM_data_s : unsigned(15 downto 0) := "0000000000000000";
 
@@ -226,11 +228,21 @@ begin
         ent_a => ULAentA_s,
         ent_b => ULAentB_s,
         saida => ULAout_s
-        -- zero
-        -- carry
-        -- overflow
+        negative => flag_in_s(0),
+        carry => flag_in_s(1),
+        zero => flag_in_s(2),
+        overflow => flag_in_s(3)
     );
     ULAout <= ULAout_s;
+
+    flags_reg_unit : reg16bits
+    port map(
+        clk => execute,
+        rst => rst,
+        wr_en => flag_wr_en,
+        data_in => flag_in_s,
+        data_out => flag_out_s
+    )
 
     acm_unit : reg16bits
     port map(

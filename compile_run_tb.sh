@@ -2,6 +2,8 @@
 echo "Managing $1"
 
 ghdl -a regBank/mux8_16bits.vhd # EXCEPITON: Dependency
+ghdl -a regBank/mux2_16bits.vhd # EXCEPITON: Dependency
+ghdl -a regBank/mux2_3bits.vhd # EXCEPITON: Dependency
 
 find ./ -type f -name "*.vhd" -print0 |
 while IFS= read -r -d '' file; do

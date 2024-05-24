@@ -8,9 +8,10 @@ entity ULA is
         ent_a : in unsigned(15 downto 0);
         ent_b : in unsigned(15 downto 0);
         saida : out unsigned(15 downto 0);
+        negative : out std_logic; --flag negative ; )
         zero : out std_logic; --flag zero
         carry : out std_logic; --flag carry
-        overflow_adder : out std_logic --flag overflow_adder
+        overflow : out std_logic --flag overflow_adder // 'Flags obrigatórias': ['Carry', 'Overflow', 'Negative'],
     );
 end entity;
 
@@ -50,11 +51,14 @@ begin
         car_out => carry_add);
 
     -- Subtracao
-    compl2_ent_b <= not(ent_b);
+    compl2_ent_b <= (not(ent_b) + 1) when ent_b(15)='0' else
+                    not(ent_b - 1) when ent_b(15)='1' else
+                    "0000000000000000";
+
     subtractor : adder_16bits port map(
         ent_a => ent_a,
         ent_b => compl2_ent_b,
-        car_in => '1',
+        car_in => '0',
         saida => saida_sub,
         car_out => carry_sub);
 
@@ -85,6 +89,6 @@ begin
         or saida_mux(12) or saida_mux(13) or saida_mux(14) or saida_mux(15));
 
     -- flag overflow_adder
-    overflow_adder <= not((ent_a(15) and ent_b(15) and saida_mux(15)) or (not ent_a(15) and not ent_b(15) and not saida_mux(15)));
-
+    overflow <= not((ent_a(15) and ent_b(15) and saida_mux(15)) or (not ent_a(15) and not ent_b(15) and not saida_mux(15)));
+    negative <= saida_mux(15);
 end architecture;

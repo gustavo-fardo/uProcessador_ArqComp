@@ -54,7 +54,7 @@ begin
         '0' when opcode = "0100" and funct = '0' else
         '0' when opcode = "1100" and funct = '0' else
         '0' when opcode = "1111" else
-        '0' when opcode = "0001"
+        '0' when opcode = "0001" else
         '1';
 
     -- Sempre, por enquanto
