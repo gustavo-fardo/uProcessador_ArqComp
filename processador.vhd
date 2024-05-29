@@ -91,6 +91,17 @@ architecture a_processador of processador is
         );
     end component;
 
+
+    component flagReg is
+        port (
+        clk :     in std_logic;
+        rst :     in std_logic;
+        wr_en :   in unsigned(7 downto 0);
+        data_in : in unsigned(7 downto 0);
+        data_out:out unsigned(7 downto 0)
+        );
+    end component;
+
     -- sinais de clock
     signal fetch : std_logic := '0';
     signal wr_inst_reg : std_logic := '0';
@@ -121,6 +132,7 @@ architecture a_processador of processador is
     signal ULAentA_s, ULAentB_s, ULAout_s : unsigned(15 downto 0) := "0000000000000000"; -- ULA
     signal flags_in_s, flags_out_s : unsigned(15 downto 0) := "0000000000000000"; -- flags
     signal flag_wr_en : std_logic := '0'; -- wr_en do flag
+    signal flagReg_wr_en : unsigned(7 downto 0) := "00000000"; -- wr_en do flag 
     signal ACM_wr_en_s : std_logic := '0'; -- wr_en do ACM
     signal ACM_data_s : unsigned(15 downto 0) := "0000000000000000";
 
@@ -242,7 +254,46 @@ begin
         wr_en => flag_wr_en,
         data_in => flag_in_s,
         data_out => flag_out_s
-    )
+    );
+
+    flagReg_unit: flagReg 
+        port map (
+            clk => execute,
+            rst => rst,
+            wr_en => flagReg_wr_en,
+            data_in => flag_in_s,
+            data_out => flag_out_s
+        );
+
+    flag_wr_en <= '1' when opcode (3 downto 2) = "10" else
+                  '1' when opcode = "0001" else
+                  '0';
+    flagReg_wr_en<= "00000000" when flag_wr_en= '0' else
+                    "00100000" when opcode (1 downto 0) = "0001" else
+                    "01110000" when opcode (1 downto 0) = "1000" else
+                    "11111111" when opcode (1 downto 0) = "1001" else
+                    "00000000" when opcode (1 downto 0) = "1010" else
+                    "00000000" when opcode (1 downto 0) = "1011" else
+                    "00000000";
+
+
+    --relembrando...
+    -- negative => flag_in_s(0),
+    -- carry => flag_in_s(1),
+    -- zero => flag_in_s(2),
+    -- overflow => flag_in_s(3)
+
+    -- BEQ <= Zero AND NOT Overflow
+    flag_in_s(4) <= flag_in_s(2) AND NOT flag_in_s(3); 
+    -- BNE <= NOT Zero AND NOT Overflow
+    flag_in_s(5) <= NOT flag_in_s(2) AND NOT flag_in_s(3);
+    -- BLT <= Negative AND NOT Zero AND NOT Overflow
+    flag_in_s(6) <= flag_in_s(0) AND NOT flag_in_s(2) AND NOT flag_in_s(3);
+    -- BGE <= NOT Negative OR Zero 
+    flag_in_s(7) <= NOT flag_in_s(0) OR flag_in_s(2); 
+
+    -- BNC <= NOT Carry -- Usar o proprio carry
+    -- BC  <= Carry -- Usar o proprio carry
 
     acm_unit : reg16bits
     port map(
