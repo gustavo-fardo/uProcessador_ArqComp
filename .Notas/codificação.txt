@@ -22,18 +22,18 @@ xxxx é irrelevante
       ddd  identifica o registrador de origem 
  msb15     10--8
 ADD: 1000 0 ddd xxxx xxxx - ADD A, R1  
-ADDI:1000 1 xxx iiii iiii - ADD A, imm    
+ADDI:1000 1 xxx iiii iiii - ADDI A, imm    
 
 SUB: 1001 0 ddd xxxx xxxx - SUB A, Rn
 SUBI 1001 1 xxx iiii iiii - SUBI A, imm
 
 AND: 1010 0 ddd xxxx xxxx - AND A, Rn
-ANDI 1001 1 xxx iiii iiii - ANDI A, imm
+ANDI 1010 1 xxx iiii iiii - ANDI A, imm
 
 XOR: 1011 0 ddd xxxx xxxx - XOR A, Rn
 XORI 1011 1 xxx iiii iiii - XORI A, imm
 
-CMP: 0001 0 ddd xxxx xxxx - CMP A, Rn == CMP Rn, A (CMP diz se são iguais)      
+CMP: 0001 0 ddd xxxx xxxx - CMP A, Rn      
 
 MOV: 0100 0 ddd xxxx xxxx - MV Rn,A
      0100 1 ddd xxxx xxxx - MV A,Rn 
@@ -42,5 +42,12 @@ LD:  1100 0 ddd iiii iiii - LD Rn, imm : iiii iiii
      1100 1 xxx iiii iiii - LD A , imm
 
 JMP: 1111 x xxx iiii iiii - JMP imm
+
+BEQ: 1110 x 000 iiii iiii - BEQ imm
+BNE: 1110 x 001 iiii iiii - BNE imm
+BLT: 1110 x 010 iiii iiii - BLT imm
+BGE: 1110 x 011 iiii iiii - BGE imm
+BNC: 1110 x 100 iiii iiii - BNC imm
+BC:  1110 x 101 iiii iiii - BC imm
 
 NOP: 0000 x xxx xxxx xxxx - NOP

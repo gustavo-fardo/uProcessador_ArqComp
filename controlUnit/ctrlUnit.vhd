@@ -12,7 +12,7 @@ entity ctrlUnit is
         regWr_src : out std_logic := '0'; -- MUX memória ou acumulador
         regWr_address : out unsigned(2 downto 0) := "000"; -- endereco banco de registradores
         ACM_wr_en : out std_logic := '0'; -- wr_en do ACM
-        PC_src : out std_logic := '0'; -- MUX source do PC
+        PC_src : out unsigned(1 downto 0) := "00"; -- MUX source do PC
         PC_wr_en : out std_logic := '0' -- wr_en do PC
     );
 end entity;
@@ -61,7 +61,8 @@ begin
     PC_wr_en <= '1';
 
     -- 1 quando JMP
-    PC_src <= '1' when opcode = "1111" else
-        '0';
+    PC_src <= "01" when opcode = "1111" else
+              "10" when opcode = "1110" else
+              "00";
 
 end architecture;

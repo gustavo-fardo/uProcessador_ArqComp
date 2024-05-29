@@ -50,7 +50,7 @@ architecture a_processador of processador is
             regWr_src : out std_logic := '0'; -- MUX memória ou acumulador
             regWr_address : out unsigned(2 downto 0) := "000"; -- endereco banco de registradores
             ACM_wr_en : out std_logic := '0'; -- wr_en do ACM
-            PC_src : out std_logic := '0'; -- MUX source do PC
+            PC_src : out unsigned (1 downto 0) := "00"; -- MUX source do PC
             PC_wr_en : out std_logic := '0' -- wr_en do PC
         );
     end component;
@@ -85,20 +85,19 @@ architecture a_processador of processador is
             ent_a : in unsigned(15 downto 0);
             ent_b : in unsigned(15 downto 0);
             saida : out unsigned(15 downto 0);
+            negative : out std_logic; --flag negative
             zero : out std_logic; --flag zero
             carry : out std_logic; --flag carry
-            overflow_adder : out std_logic --flag overflow_adder
+            overflow : out std_logic --flag overflow_adder
         );
     end component;
-
-
     component flagReg is
         port (
-        clk :     in std_logic;
-        rst :     in std_logic;
-        wr_en :   in unsigned(7 downto 0);
-        data_in : in unsigned(7 downto 0);
-        data_out:out unsigned(7 downto 0)
+            clk : in std_logic;
+            rst : in std_logic;
+            wr_en : in unsigned(7 downto 0);
+            data_in : in unsigned(7 downto 0);
+            data_out : out unsigned(7 downto 0)
         );
     end component;
 
@@ -108,6 +107,10 @@ architecture a_processador of processador is
     signal decode : std_logic := '0';
     signal execute : std_logic := '0';
 
+    -- partes da instrucao
+    signal opcode : unsigned(3 downto 0) := "0000";
+    signal br_condition : unsigned(2 downto 0) := "000";
+
     -- extensão de imediato
     signal immediate : unsigned(7 downto 0) := "00000000";
     signal ext_signal : unsigned(7 downto 0) := "00000000";
@@ -115,7 +118,7 @@ architecture a_processador of processador is
 
     -- sinais de conexão
     signal state_s : unsigned(1 downto 0) := "00";
-    signal PC_src_s : std_logic := '0'; -- MUX source do PC
+    signal PC_src_s : unsigned (1 downto 0) := "00"; -- MUX source do PC
     signal PC_wr_en_s : std_logic := '0'; -- wr_en do PC
     signal PC_in_s : unsigned(7 downto 0) := "00000000";
     signal PC_out_s : unsigned(7 downto 0) := "00000000";
@@ -130,7 +133,7 @@ architecture a_processador of processador is
     signal ULA_srcA_s : std_logic := '0'; -- MUX source do RegA da ULA
     signal ULA_srcB_s : std_logic := '0'; -- MUX source do RegB da ULA
     signal ULAentA_s, ULAentB_s, ULAout_s : unsigned(15 downto 0) := "0000000000000000"; -- ULA
-    signal flags_in_s, flags_out_s : unsigned(15 downto 0) := "0000000000000000"; -- flags
+    signal flag_in_s, flag_out_s : unsigned(7 downto 0) := "00000000"; -- flags
     signal flag_wr_en : std_logic := '0'; -- wr_en do flag
     signal flagReg_wr_en : unsigned(7 downto 0) := "00000000"; -- wr_en do flag 
     signal ACM_wr_en_s : std_logic := '0'; -- wr_en do ACM
@@ -139,7 +142,7 @@ architecture a_processador of processador is
 begin
     sm_unit : sm_fet_dec_exe
     port map(
-        clk => clk, 
+        clk => clk,
         rst => rst,
         state => state_s
     );
@@ -159,7 +162,17 @@ begin
         '0';
 
     -- muxPC
-    PC_in_s <= immediate when PC_src_s = '1' else
+    PC_in_s <= immediate when PC_src_s = "01" else
+        (PC_out_s + immediate) when (PC_src_s = "10" and
+        (
+        (br_condition = "000" and flag_in_s(4) = '1') or
+        (br_condition = "001" and flag_in_s(5) = '1') or
+        (br_condition = "010" and flag_in_s(6) = '1') or
+        (br_condition = "011" and flag_in_s(7) = '1') or
+        (br_condition = "100" and flag_in_s(1) = '0') or
+        (br_condition = "101" and flag_in_s(1) = '1')
+        )
+        ) else
         (PC_out_s + 1);
 
     pc_unit : PC
@@ -188,6 +201,8 @@ begin
         data_out => inst_reg_out_s
     );
     inst <= inst_reg_out_s;
+    opcode <= inst_reg_out_s(15 downto 12);
+    br_condition <= inst_reg_out_s(10 downto 8);
 
     immediate <= ROM_data_s(7 downto 0);
     ext_signal <= "11111111" when ROM_data_s(7) = '1' else
@@ -239,59 +254,47 @@ begin
         sel => ULAop_s,
         ent_a => ULAentA_s,
         ent_b => ULAentB_s,
-        saida => ULAout_s
+        saida => ULAout_s,
         negative => flag_in_s(0),
         carry => flag_in_s(1),
         zero => flag_in_s(2),
         overflow => flag_in_s(3)
     );
     ULAout <= ULAout_s;
-
-    flags_reg_unit : reg16bits
+    
+    flagReg_unit : flagReg
     port map(
         clk => execute,
         rst => rst,
-        wr_en => flag_wr_en,
+        wr_en => flagReg_wr_en,
         data_in => flag_in_s,
         data_out => flag_out_s
     );
 
-    flagReg_unit: flagReg 
-        port map (
-            clk => execute,
-            rst => rst,
-            wr_en => flagReg_wr_en,
-            data_in => flag_in_s,
-            data_out => flag_out_s
-        );
-
-    flag_wr_en <= '1' when opcode (3 downto 2) = "10" else
-                  '1' when opcode = "0001" else
-                  '0';
-    flagReg_wr_en<= "00000000" when flag_wr_en= '0' else
-                    "00100000" when opcode (1 downto 0) = "0001" else
-                    "01110000" when opcode (1 downto 0) = "1000" else
-                    "11111111" when opcode (1 downto 0) = "1001" else
-                    "00000000" when opcode (1 downto 0) = "1010" else
-                    "00000000" when opcode (1 downto 0) = "1011" else
-                    "00000000";
-
+    flag_wr_en <= '1' when opcode(3 downto 2) = "10" else --ARITIMETICOS
+        '1' when opcode = "0001" else --CMP
+        '0';
+    flagReg_wr_en <= "00000000" when flag_wr_en = '0' else
+        "11111111" when opcode (1 downto 0) = "0001" else --CMP
+        "11110000" when opcode (1 downto 0) = "1000" else --ADD
+        "11111111" when opcode (1 downto 0) = "1001" else --SUB
+        "00100000" when opcode (1 downto 0) = "1010" else --AND
+        "00100000" when opcode (1 downto 0) = "1011" else --XOR
+        "00000000";
 
     --relembrando...
     -- negative => flag_in_s(0),
     -- carry => flag_in_s(1),
     -- zero => flag_in_s(2),
     -- overflow => flag_in_s(3)
-
     -- BEQ <= Zero AND NOT Overflow
-    flag_in_s(4) <= flag_in_s(2) AND NOT flag_in_s(3); 
+    flag_in_s(4) <= flag_in_s(2) and not flag_in_s(3);
     -- BNE <= NOT Zero AND NOT Overflow
-    flag_in_s(5) <= NOT flag_in_s(2) AND NOT flag_in_s(3);
+    flag_in_s(5) <= not flag_in_s(2) and not flag_in_s(3);
     -- BLT <= Negative AND NOT Zero AND NOT Overflow
-    flag_in_s(6) <= flag_in_s(0) AND NOT flag_in_s(2) AND NOT flag_in_s(3);
+    flag_in_s(6) <= flag_in_s(0) and not flag_in_s(2) and not flag_in_s(3);
     -- BGE <= NOT Negative OR Zero 
-    flag_in_s(7) <= NOT flag_in_s(0) OR flag_in_s(2); 
-
+    flag_in_s(7) <= not flag_in_s(0) or flag_in_s(2);
     -- BNC <= NOT Carry -- Usar o proprio carry
     -- BC  <= Carry -- Usar o proprio carry
 

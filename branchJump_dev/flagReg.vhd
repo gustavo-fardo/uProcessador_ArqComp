@@ -8,7 +8,7 @@ entity flagReg is
       rst :     in std_logic;
       wr_en :   in unsigned(7 downto 0);
       data_in : in unsigned(7 downto 0);
-      data_out:out unsigned(7 downto 0)
+      data_out : out unsigned(7 downto 0)
    );
 end entity;
 
@@ -27,7 +27,7 @@ architecture flagReg_arch of flagReg is
 begin
 
    gen00 :
-   for i in 15 downto 0 generate
+   for i in 7 downto 0 generate
       dff_i : dff_e
       port map(
          clk => clk,
