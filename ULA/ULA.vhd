@@ -51,9 +51,9 @@ begin
         car_out => carry_add);
 
     -- Subtracao
-    compl2_ent_b <= (not(ent_b) + 1) when ent_b(15)='0' else
-                    not(ent_b - 1) when ent_b(15)='1' else
-                    "0000000000000000";
+    compl2_ent_b <= (not(ent_b) + 1) when ent_b(15) = '0' else
+        not(ent_b - 1) when ent_b(15) = '1' else
+        "0000000000000000";
 
     subtractor : adder_16bits port map(
         ent_a => ent_a,
@@ -88,7 +88,16 @@ begin
         or saida_mux(8) or saida_mux(9) or saida_mux(10) or saida_mux(11)
         or saida_mux(12) or saida_mux(13) or saida_mux(14) or saida_mux(15));
 
-    -- flag overflow_adder
-    overflow <= not((ent_a(15) and ent_b(15) and saida_mux(15)) or (not ent_a(15) and not ent_b(15) and not saida_mux(15)));
+    -- flag overflow
+    overflow <= (
+        (ent_a(15) and ent_b(15) and not saida_mux(15)) or
+        (not ent_a(15) and not ent_b(15) and saida_mux(15))
+        ) when sel = "00" else
+        (
+        (not ent_a(15) and ent_b(15) and not saida_mux(15)) or
+        (ent_a(15) and not ent_b(15) and saida_mux(15))
+        ) when sel = "01" else
+        '0';
     negative <= saida_mux(15);
+
 end architecture;

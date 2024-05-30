@@ -29,6 +29,7 @@ begin
 
     -- OP_ctrl (só soma e sub)
     ULAop <= "01" when opcode = "1001" else
+             "01" when opcode = "0001" else
         "00";
 
     -- funct = 1 (com imediato)

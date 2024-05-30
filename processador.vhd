@@ -165,12 +165,12 @@ begin
     PC_in_s <= immediate when PC_src_s = "01" else
         (PC_out_s + immediate) when (PC_src_s = "10" and
         (
-        (br_condition = "000" and flag_in_s(4) = '1') or
-        (br_condition = "001" and flag_in_s(5) = '1') or
-        (br_condition = "010" and flag_in_s(6) = '1') or
-        (br_condition = "011" and flag_in_s(7) = '1') or
-        (br_condition = "100" and flag_in_s(1) = '0') or
-        (br_condition = "101" and flag_in_s(1) = '1')
+        (br_condition = "000" and flag_out_s(4) = '1') or
+        (br_condition = "001" and flag_out_s(5) = '1') or
+        (br_condition = "010" and flag_out_s(6) = '1') or
+        (br_condition = "011" and flag_out_s(7) = '1') or
+        (br_condition = "100" and flag_out_s(1) = '0') or
+        (br_condition = "101" and flag_out_s(1) = '1')
         )
         ) else
         (PC_out_s + 1);
@@ -261,7 +261,7 @@ begin
         overflow => flag_in_s(3)
     );
     ULAout <= ULAout_s;
-    
+
     flagReg_unit : flagReg
     port map(
         clk => execute,
