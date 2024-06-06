@@ -51,7 +51,8 @@ architecture a_processador of processador is
             regWr_address : out unsigned(2 downto 0) := "000"; -- endereco banco de registradores
             ACM_wr_en : out std_logic := '0'; -- wr_en do ACM
             PC_src : out unsigned (1 downto 0) := "00"; -- MUX source do PC
-            PC_wr_en : out std_logic := '0' -- wr_en do PC
+            PC_wr_en : out std_logic := '0'; -- wr_en do PC
+            RAM_wr_en : out std_logic := '0' -- wr_en da RAM
         );
     end component;
 
@@ -90,7 +91,9 @@ architecture a_processador of processador is
             carry : out std_logic; --flag carry
             overflow : out std_logic --flag overflow_adder
         );
+
     end component;
+
     component flagReg is
         port (
             clk : in std_logic;
@@ -98,6 +101,16 @@ architecture a_processador of processador is
             wr_en : in unsigned(7 downto 0);
             data_in : in unsigned(7 downto 0);
             data_out : out unsigned(7 downto 0)
+        );
+    end component;
+
+    component ram is
+        port (
+            clk : in std_logic;
+            endereco : in unsigned(6 downto 0);
+            wr_en : in std_logic;
+            dado_in : in unsigned(15 downto 0);
+            dado_out : out unsigned(15 downto 0)
         );
     end component;
 
@@ -138,6 +151,9 @@ architecture a_processador of processador is
     signal flagReg_wr_en : unsigned(7 downto 0) := "00000000"; -- wr_en do flag 
     signal ACM_wr_en_s : std_logic := '0'; -- wr_en do ACM
     signal ACM_data_s : unsigned(15 downto 0) := "0000000000000000";
+    signal RAM_wr_en_s : std_logic := '0'; -- wr_en da RAM
+    signal RAM_data_out_s : unsigned(15 downto 0) := "0000000000000000";
+    signal RAM_data_in_s : unsigned(15 downto 0) := "0000000000000000";
 
 begin
     sm_unit : sm_fet_dec_exe
@@ -220,7 +236,8 @@ begin
         regWr_address => regWr_address_s,
         ACM_wr_en => ACM_wr_en_s,
         PC_src => PC_src_s,
-        PC_wr_en => PC_wr_en_s
+        PC_wr_en => PC_wr_en_s,
+        RAM_wr_en => RAM_wr_en_s
     );
 
     -- muxRegBankWrite
@@ -307,5 +324,14 @@ begin
         data_out => ACM_data_s
     );
     ac_data <= ACM_data_s;
+
+    ram_unit : ram
+    port map(
+        clk => execute,
+        endereco => reg1_data_s(6 downto 0),
+        wr_en => RAM_wr_en_s,
+        dado_in => ACM_data_s,
+        dado_out => RAM_data_out_s
+    );
 
 end architecture;

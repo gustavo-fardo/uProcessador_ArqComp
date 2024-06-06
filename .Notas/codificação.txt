@@ -35,13 +35,14 @@ XORI 1011 1 xxx iiii iiii - XORI A, imm
 
 CMP: 0001 0 ddd xxxx xxxx - CMP A, Rn      
 
-MOV: 0100 0 ddd xxxx xxxx - MV Rn,A
-     0100 1 ddd xxxx xxxx - MV A,Rn 
+MOV: 0100 0 ddd xxxx xxxx - MV Rn, A
+     0100 1 ddd xxxx xxxx - MV A, Rn 
 
-LD:  1100 0 ddd iiii iiii - LD Rn, imm : iiii iiii
-     1100 1 xxx iiii iiii - LD A , imm
+LD:  1100 0 ddd iiii iiii - LD Rn, imm
+     1100 1 xxx iiii iiii - LD A, imm
 
-JMP: 1111 x xxx iiii iiii - JMP imm
+LW:  1101 0 ddd xxxx xxxx - LW Rn, A
+SW:  1101 1 ddd xxxx xxxx - SW Rn, A
 
 BEQ: 1110 x 000 iiii iiii - BEQ imm
 BNE: 1110 x 001 iiii iiii - BNE imm
@@ -49,5 +50,7 @@ BLT: 1110 x 010 iiii iiii - BLT imm
 BGE: 1110 x 011 iiii iiii - BGE imm
 BNC: 1110 x 100 iiii iiii - BNC imm
 BC:  1110 x 101 iiii iiii - BC imm
+
+JMP: 1111 x xxx iiii iiii - JMP imm
 
 NOP: 0000 x xxx xxxx xxxx - NOP

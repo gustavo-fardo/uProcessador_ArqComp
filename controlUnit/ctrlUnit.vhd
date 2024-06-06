@@ -13,7 +13,8 @@ entity ctrlUnit is
         regWr_address : out unsigned(2 downto 0) := "000"; -- endereco banco de registradores
         ACM_wr_en : out std_logic := '0'; -- wr_en do ACM
         PC_src : out unsigned(1 downto 0) := "00"; -- MUX source do PC
-        PC_wr_en : out std_logic := '0' -- wr_en do PC
+        PC_wr_en : out std_logic := '0'; -- wr_en do PC
+        RAM_wr_en : out std_logic := '0' -- wr_en da RAM
     );
 end entity;
 
@@ -45,9 +46,10 @@ begin
     regWr_src <= '1' when opcode = "1100" and funct = '0' else
         '0';
 
-    -- 1 quando LD para Registrador e MOV para Registrador
+    -- 1 quando LD para Registrador, MOV para Registrador e LW para Registrador
     regBank_wr_en <= '1' when opcode = "0100" and funct = '0' else
         '1' when opcode = "1100" and funct = '0' else
+        '1' when opcode = "1101" and funct = '0' else
         '0';
 
     --- 0 quando CMP, LD para Registrador, MOV para Registrador, JMP e CMP
@@ -65,5 +67,9 @@ begin
     PC_src <= "01" when opcode = "1111" else
               "10" when opcode = "1110" else
               "00";
+
+    -- 1 quando SW
+    RAM_wr_en <= '1' when opcode = "1101" and funct = '1' else
+                 '0';
 
 end architecture;
