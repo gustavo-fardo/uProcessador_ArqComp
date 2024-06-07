@@ -5,7 +5,7 @@ use ieee.numeric_std.all;
 entity processador is
     port (
         clk, rst : in std_logic := '0';
-        state : out unsigned(1 downto 0) := "00";
+        state : out unsigned(2 downto 0) := "000";
         PC_data : out unsigned(7 downto 0) := "00000000";
         inst : out unsigned(15 downto 0) := "0000000000000000";
         reg1_data : out unsigned(15 downto 0) := "0000000000000000";
@@ -20,7 +20,7 @@ architecture a_processador of processador is
     component sm_fet_dec_exe is
         port (
             clk, rst : in std_logic := '0';
-            state : out unsigned(1 downto 0) := "00"
+            state : out unsigned(2 downto 0) := "000"
         );
     end component;
 
@@ -118,6 +118,7 @@ architecture a_processador of processador is
     signal fetch : std_logic := '0';
     signal wr_inst_reg : std_logic := '0';
     signal decode : std_logic := '0';
+    signal RAM_clk : std_logic := '0';
     signal execute : std_logic := '0';
 
     -- partes da instrucao
@@ -130,7 +131,7 @@ architecture a_processador of processador is
     signal ext_immediate : unsigned(15 downto 0) := "0000000000000000";
 
     -- sinais de conexão
-    signal state_s : unsigned(1 downto 0) := "00";
+    signal state_s : unsigned(2 downto 0) := "000";
     signal PC_src_s : unsigned (1 downto 0) := "00"; -- MUX source do PC
     signal PC_wr_en_s : std_logic := '0'; -- wr_en do PC
     signal PC_in_s : unsigned(7 downto 0) := "00000000";
@@ -150,7 +151,8 @@ architecture a_processador of processador is
     signal flag_wr_en : std_logic := '0'; -- wr_en do flag
     signal flagReg_wr_en : unsigned(7 downto 0) := "00000000"; -- wr_en do flag 
     signal ACM_wr_en_s : std_logic := '0'; -- wr_en do ACM
-    signal ACM_data_s : unsigned(15 downto 0) := "0000000000000000";
+    signal ACM_data_out_s : unsigned(15 downto 0) := "0000000000000000";
+    signal ACM_data_in_s : unsigned(15 downto 0) := "0000000000000000";
     signal RAM_wr_en_s : std_logic := '0'; -- wr_en da RAM
     signal RAM_data_out_s : unsigned(15 downto 0) := "0000000000000000";
     signal RAM_data_in_s : unsigned(15 downto 0) := "0000000000000000";
@@ -166,15 +168,18 @@ begin
     --clk_0 (ROM) => fetch
     --clk_1 (Instruction Reg) => wr_inst_reg
     --clk_2 (REG_Bank) => decode
-    --clk_3 (ACM e PC) => execute
+    --clk_3 (RAM) => RAM_access
+    --clk_4 (ACM e PC) => execute
     state <= state_s;
-    fetch <= '1' when state_s = "00" else
+    fetch <= '1' when state_s = "000" else
         '0';
-    wr_inst_reg <= '1' when state_s = "01" else
+    wr_inst_reg <= '1' when state_s = "001" else
         '0';
-    decode <= '1' when state_s = "10" else
+    decode <= '1' when state_s = "010" else
         '0';
-    execute <= '1' when state_s = "11" else
+    RAM_clk <= '1' when state_s = "010" else
+        '0';
+    execute <= '1' when state_s = "100" else
         '0';
 
     -- muxPC
@@ -242,7 +247,7 @@ begin
 
     -- muxRegBankWrite
     regWr_data_s <= ext_immediate when regWr_src_s = '1' else
-        ACM_data_s;
+        ACM_data_out_s;
 
     regBank_unit : regBank
     port map(
@@ -264,7 +269,7 @@ begin
         reg1_data_s;
     -- muxULAb
     ULAentA_s <= "0000000000000000" when ULA_srcB_s = '1' else
-        ACM_data_s;
+        ACM_data_out_s;
 
     ULA_unit : ULA
     port map(
@@ -320,17 +325,19 @@ begin
         clk => execute,
         rst => rst,
         wr_en => ACM_wr_en_s,
-        data_in => ULAout_s,
-        data_out => ACM_data_s
+        data_in => ACM_data_in_s,
+        data_out => ACM_data_out_s
     );
-    ac_data <= ACM_data_s;
+    ac_data <= ACM_data_out_s;
+    ACM_data_in_s <= RAM_data_out_s when opcode="1101" and inst_reg_out_s(11)='0' else 
+                    ULAout_s;
 
     ram_unit : ram
     port map(
-        clk => execute,
+        clk => RAM_clk,
         endereco => reg1_data_s(6 downto 0),
         wr_en => RAM_wr_en_s,
-        dado_in => ACM_data_s,
+        dado_in => ACM_data_out_s,
         dado_out => RAM_data_out_s
     );
 

@@ -41,8 +41,8 @@ MOV: 0100 0 ddd xxxx xxxx - MV Rn, A
 LD:  1100 0 ddd iiii iiii - LD Rn, imm
      1100 1 xxx iiii iiii - LD A, imm
 
-LW:  1101 0 ddd xxxx xxxx - LW Rn, A
-SW:  1101 1 ddd xxxx xxxx - SW Rn, A
+LW:  1101 0 ddd xxxx xxxx - LW A, Rn # Carrega no acumulador o dado no endereço Rn da RAM
+SW:  1101 1 ddd xxxx xxxx - SW A, Rn # Carrega no endereço Rn da RAM o dado do acumulador
 
 BEQ: 1110 x 000 iiii iiii - BEQ imm
 BNE: 1110 x 001 iiii iiii - BNE imm

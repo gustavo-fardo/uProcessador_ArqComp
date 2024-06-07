@@ -9,7 +9,7 @@ architecture processador_tb_arch of processador_tb is
     component processador is
         port (
             clk, rst : in std_logic := '0';
-            state : out unsigned(1 downto 0) := "00";
+            state : out unsigned(2 downto 0) := "000";
             PC_data : out unsigned(7 downto 0) := "00000000";
             inst : out unsigned(15 downto 0) := "0000000000000000";
             reg1_data : out unsigned(15 downto 0) := "0000000000000000";
@@ -24,7 +24,7 @@ architecture processador_tb_arch of processador_tb is
     constant period_time : time := 100 ns;
     signal finished : std_logic := '0';
 
-    signal state : unsigned(1 downto 0) := "00";
+    signal state : unsigned(2 downto 0) := "000";
     signal PC_data : unsigned(7 downto 0) := "00000000";
     signal inst : unsigned(15 downto 0) := "0000000000000000";
     signal reg1_data : unsigned(15 downto 0) := "0000000000000000";

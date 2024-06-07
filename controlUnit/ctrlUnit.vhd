@@ -52,12 +52,14 @@ begin
         '1' when opcode = "1101" and funct = '0' else
         '0';
 
-    --- 0 quando CMP, LD para Registrador, MOV para Registrador, JMP e CMP
+    --- 0 quando CMP, LD para Registrador, MOV para Registrador, JMP, BRANCHES, SW e NOP
     ACM_wr_en <= '0' when opcode = "0001" and funct = '0' else
         '0' when opcode = "0100" and funct = '0' else
         '0' when opcode = "1100" and funct = '0' else
         '0' when opcode = "1111" else
-        '0' when opcode = "0001" else
+        '0' when opcode = "1110" else
+        '0' when opcode = "1101" and funct = '1' else
+        '0' when opcode = "0000" else
         '1';
 
     -- Sempre, por enquanto
