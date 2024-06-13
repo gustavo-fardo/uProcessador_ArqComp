@@ -177,7 +177,7 @@ begin
         '0';
     decode <= '1' when state_s = "010" else
         '0';
-    RAM_clk <= '1' when state_s = "010" else
+    RAM_clk <= '1' when state_s = "011" else
         '0';
     execute <= '1' when state_s = "100" else
         '0';
@@ -251,7 +251,7 @@ begin
 
     regBank_unit : regBank
     port map(
-        clk => decode,
+        clk => execute,
         rst => rst,
         wr_en => regBank_wr_en_s,
         wr_add => regWr_address_s,
