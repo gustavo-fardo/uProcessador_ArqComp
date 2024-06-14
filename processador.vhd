@@ -174,15 +174,15 @@ begin
     --clk_3 (RAM) => RAM_access
     --clk_4 (ACM e PC) => execute
     state <= state_s;
-    fetch <= '1' when state_s = "000" and halted_s = '0' else
+    fetch <= '1' when state_s = "000" else
         '0';
-    wr_inst_reg <= '1' when state_s = "001" and halted_s = '0' else
+    wr_inst_reg <= '1' when state_s = "001" else
         '0';
-    decode <= '1' when state_s = "010" and halted_s = '0' else
+    decode <= '1' when state_s = "010" else
         '0';
-    RAM_clk <= '1' when state_s = "011" and halted_s = '0' else
+    RAM_clk <= '1' when state_s = "011" else
         '0';
-    execute <= '1' when state_s = "100" and halted_s = '0' else
+    execute <= '1' when state_s = "100" else
         '0';
 
     -- muxPC
