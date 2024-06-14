@@ -54,3 +54,5 @@ BC:  1110 x 101 iiii iiii - BC imm
 JMP: 1111 x xxx iiii iiii - JMP imm
 
 NOP: 0000 x xxx xxxx xxxx - NOP
+
+HALT: 0101 x xxx xxxx xxxx - HALT

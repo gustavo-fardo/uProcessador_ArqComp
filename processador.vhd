@@ -11,7 +11,8 @@ entity processador is
         reg1_data : out unsigned(15 downto 0) := "0000000000000000";
         reg2_data : out unsigned(15 downto 0) := "0000000000000000";
         ac_data : out unsigned(15 downto 0) := "0000000000000000";
-        ULAout : out unsigned(15 downto 0) := "0000000000000000"
+        ULAout : out unsigned(15 downto 0) := "0000000000000000";
+        halted : out std_logic := '0'
     );
 end entity;
 
@@ -52,7 +53,8 @@ architecture a_processador of processador is
             ACM_wr_en : out std_logic := '0'; -- wr_en do ACM
             PC_src : out unsigned (1 downto 0) := "00"; -- MUX source do PC
             PC_wr_en : out std_logic := '0'; -- wr_en do PC
-            RAM_wr_en : out std_logic := '0' -- wr_en da RAM
+            RAM_wr_en : out std_logic := '0'; -- wr_en da RAM
+            halted : out std_logic := '0' -- halt
         );
     end component;
 
@@ -156,6 +158,7 @@ architecture a_processador of processador is
     signal RAM_wr_en_s : std_logic := '0'; -- wr_en da RAM
     signal RAM_data_out_s : unsigned(15 downto 0) := "0000000000000000";
     signal RAM_data_in_s : unsigned(15 downto 0) := "0000000000000000";
+    signal halted_s : std_logic := '0';
 
 begin
     sm_unit : sm_fet_dec_exe
@@ -171,15 +174,15 @@ begin
     --clk_3 (RAM) => RAM_access
     --clk_4 (ACM e PC) => execute
     state <= state_s;
-    fetch <= '1' when state_s = "000" else
+    fetch <= '1' when state_s = "000" and halted_s = '0' else
         '0';
-    wr_inst_reg <= '1' when state_s = "001" else
+    wr_inst_reg <= '1' when state_s = "001" and halted_s = '0' else
         '0';
-    decode <= '1' when state_s = "010" else
+    decode <= '1' when state_s = "010" and halted_s = '0' else
         '0';
-    RAM_clk <= '1' when state_s = "011" else
+    RAM_clk <= '1' when state_s = "011" and halted_s = '0' else
         '0';
-    execute <= '1' when state_s = "100" else
+    execute <= '1' when state_s = "100" and halted_s = '0' else
         '0';
 
     -- muxPC
@@ -242,7 +245,8 @@ begin
         ACM_wr_en => ACM_wr_en_s,
         PC_src => PC_src_s,
         PC_wr_en => PC_wr_en_s,
-        RAM_wr_en => RAM_wr_en_s
+        RAM_wr_en => RAM_wr_en_s,
+        halted => halted_s
     );
 
     -- muxRegBankWrite
@@ -340,5 +344,7 @@ begin
         dado_in => ACM_data_out_s,
         dado_out => RAM_data_out_s
     );
+
+    halted <= halted_s;
 
 end architecture;

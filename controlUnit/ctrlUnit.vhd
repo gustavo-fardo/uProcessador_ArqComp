@@ -14,7 +14,8 @@ entity ctrlUnit is
         ACM_wr_en : out std_logic := '0'; -- wr_en do ACM
         PC_src : out unsigned(1 downto 0) := "00"; -- MUX source do PC
         PC_wr_en : out std_logic := '0'; -- wr_en do PC
-        RAM_wr_en : out std_logic := '0' -- wr_en da RAM
+        RAM_wr_en : out std_logic := '0'; -- wr_en da RAM
+        halted : out std_logic := '0' -- halt
     );
 end entity;
 
@@ -52,7 +53,7 @@ begin
         '1' when opcode = "1101" and funct = '0' else
         '0';
 
-    --- 0 quando CMP, LD para Registrador, MOV para Registrador, JMP, BRANCHES, SW e NOP
+    --- 0 quando CMP, LD para Registrador, MOV para Registrador, JMP, BRANCHES, SW, NOP e HALT
     ACM_wr_en <= '0' when opcode = "0001" and funct = '0' else
         '0' when opcode = "0100" and funct = '0' else
         '0' when opcode = "1100" and funct = '0' else
@@ -60,10 +61,12 @@ begin
         '0' when opcode = "1110" else
         '0' when opcode = "1101" and funct = '1' else
         '0' when opcode = "0000" else
+        '0' when opcode = "0101" else
         '1';
 
     -- Sempre, por enquanto
-    PC_wr_en <= '1';
+    PC_wr_en <= '0' when opcode = "0101" else
+                '1';
 
     -- 1 quando JMP
     PC_src <= "01" when opcode = "1111" else
@@ -73,5 +76,9 @@ begin
     -- 1 quando SW
     RAM_wr_en <= '1' when opcode = "1101" and funct = '1' else
                  '0';
+
+    -- halt
+    halted <= '1' when opcode = "0101" else
+              '0';
 
 end architecture;
