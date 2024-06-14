@@ -1,0 +1,10 @@
+                LD R7 , 0x20 --32
+                LD R6 , 0x00
+                LD R5 , 0x02 --2
+
+inicializa:     MOV A, R5 --valor a ser carregado na memoria
+                SW A, R5
+                ADDI A, 0x01
+                MOV R5, A
+                CMP A, R7
+                BLT -5
