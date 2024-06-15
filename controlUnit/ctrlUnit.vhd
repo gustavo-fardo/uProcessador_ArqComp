@@ -47,10 +47,9 @@ begin
     regWr_src <= '1' when opcode = "1100" and funct = '0' else
         '0';
 
-    -- 1 quando LD para Registrador, MOV para Registrador e LW para Registrador
+    -- 1 quando LD para Registrador, MOV para Registrador
     regBank_wr_en <= '1' when opcode = "0100" and funct = '0' else
         '1' when opcode = "1100" and funct = '0' else
-        '1' when opcode = "1101" and funct = '0' else
         '0';
 
     --- 0 quando CMP, LD para Registrador, MOV para Registrador, JMP, BRANCHES, SW, NOP e HALT
