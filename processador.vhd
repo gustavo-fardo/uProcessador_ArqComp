@@ -44,7 +44,7 @@ architecture a_processador of processador is
     component ctrlUnit is
         port (
             instr : in unsigned (15 downto 0) := "0000000000000000";
-            ULAborrow: out std_logic := '0'; -- operação com borrow
+            ULAborrow : out std_logic := '0'; -- operação com borrow
             ULAop : out unsigned (1 downto 0) := "00"; -- selecao de operacoes da ULA
             ULA_srcA : out std_logic := '0'; -- MUX source do RegA da ULA
             ULA_srcB : out std_logic := '0'; -- MUX source do RegB da ULA
@@ -86,7 +86,7 @@ architecture a_processador of processador is
     component ULA
         port (
             sel : in unsigned(1 downto 0);
-            borrow , carry_borrow : in std_logic ;
+            borrow, carry_borrow : in std_logic;
             ent_a : in unsigned(15 downto 0);
             ent_b : in unsigned(15 downto 0);
             saida : out unsigned(15 downto 0);
@@ -148,7 +148,7 @@ architecture a_processador of processador is
     signal regWr_data_s : unsigned(15 downto 0) := "0000000000000000";
     signal reg1_data_s : unsigned(15 downto 0) := "0000000000000000";
     signal ULAop_s : unsigned (1 downto 0) := "00";
-    signal borrow_s , carry_borrow_s: std_logic :='0';
+    signal borrow_s, carry_borrow_s : std_logic := '0';
     signal ULA_srcA_s : std_logic := '0'; -- MUX source do RegA da ULA
     signal ULA_srcB_s : std_logic := '0'; -- MUX source do RegB da ULA
     signal ULAentA_s, ULAentB_s, ULAout_s : unsigned(15 downto 0) := "0000000000000000"; -- ULA
@@ -293,10 +293,7 @@ begin
         overflow => flag_in_s(3)
     );
     ULAout <= ULAout_s;
-    carry_borrow_s<=flag_in_s(1); -- carry => flag_in_s(1),
-        
-
-
+    carry_borrow_s <= flag_out_s(1); -- carry => flag_in_s(1),
     flagReg_unit : flagReg
     port map(
         clk => execute,
@@ -306,15 +303,12 @@ begin
         data_out => flag_out_s
     );
 
-    flag_wr_en <= '1' when opcode(3 downto 2) = "10" else --ARITIMETICOS
-        '1' when opcode = "0001" else --CMP
-        '0';
-    flagReg_wr_en <= "00000000" when flag_wr_en = '0' else
-        "11111111" when opcode (1 downto 0) = "0001" else --CMP
-        "11110000" when opcode (1 downto 0) = "1000" else --ADD
-        "11111111" when opcode (1 downto 0) = "1001" else --SUB
-        "00100000" when opcode (1 downto 0) = "1010" else --AND
-        "00100000" when opcode (1 downto 0) = "1011" else --XOR
+    flagReg_wr_en <= "11111111" when opcode  = "0001" else --CMP
+        "11110010" when opcode  = "1000" else --ADD
+        "11111111" when opcode  = "1001" else --SUB
+        "11111111" when opcode  = "1101" else --SUB
+        "00100000" when opcode  = "1010" else --AND
+        "00100000" when opcode  = "1011" else --XOR
         "00000000";
 
     --relembrando...
@@ -342,8 +336,8 @@ begin
         data_out => ACM_data_out_s
     );
     ac_data <= ACM_data_out_s;
-    ACM_data_in_s <= RAM_data_out_s when opcode="0011" and inst_reg_out_s(11)='0' else 
-                    ULAout_s;
+    ACM_data_in_s <= RAM_data_out_s when opcode = "0011" and inst_reg_out_s(11) = '0' else
+        ULAout_s;
 
     ram_unit : ram
     port map(
