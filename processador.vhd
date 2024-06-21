@@ -44,6 +44,7 @@ architecture a_processador of processador is
     component ctrlUnit is
         port (
             instr : in unsigned (15 downto 0) := "0000000000000000";
+            ULAborrow: out std_logic := '0'; -- operação com borrow
             ULAop : out unsigned (1 downto 0) := "00"; -- selecao de operacoes da ULA
             ULA_srcA : out std_logic := '0'; -- MUX source do RegA da ULA
             ULA_srcB : out std_logic := '0'; -- MUX source do RegB da ULA
@@ -85,6 +86,7 @@ architecture a_processador of processador is
     component ULA
         port (
             sel : in unsigned(1 downto 0);
+            borrow , carry_borrow : in std_logic ;
             ent_a : in unsigned(15 downto 0);
             ent_b : in unsigned(15 downto 0);
             saida : out unsigned(15 downto 0);
@@ -146,6 +148,7 @@ architecture a_processador of processador is
     signal regWr_data_s : unsigned(15 downto 0) := "0000000000000000";
     signal reg1_data_s : unsigned(15 downto 0) := "0000000000000000";
     signal ULAop_s : unsigned (1 downto 0) := "00";
+    signal borrow_s , carry_borrow_s: std_logic :='0';
     signal ULA_srcA_s : std_logic := '0'; -- MUX source do RegA da ULA
     signal ULA_srcB_s : std_logic := '0'; -- MUX source do RegB da ULA
     signal ULAentA_s, ULAentB_s, ULAout_s : unsigned(15 downto 0) := "0000000000000000"; -- ULA
@@ -236,6 +239,7 @@ begin
     ctrl_unit : ctrlUnit
     port map(
         instr => inst_reg_out_s,
+        ULAborrow => borrow_s,
         ULAop => ULAop_s,
         ULA_srcA => ULA_srcA_s,
         ULA_srcB => ULA_srcB_s,
@@ -278,6 +282,8 @@ begin
     ULA_unit : ULA
     port map(
         sel => ULAop_s,
+        borrow => borrow_s,
+        carry_borrow => carry_borrow_s,
         ent_a => ULAentA_s,
         ent_b => ULAentB_s,
         saida => ULAout_s,
@@ -287,6 +293,9 @@ begin
         overflow => flag_in_s(3)
     );
     ULAout <= ULAout_s;
+    carry_borrow_s<=flag_in_s(1); -- carry => flag_in_s(1),
+        
+
 
     flagReg_unit : flagReg
     port map(
@@ -333,7 +342,7 @@ begin
         data_out => ACM_data_out_s
     );
     ac_data <= ACM_data_out_s;
-    ACM_data_in_s <= RAM_data_out_s when opcode="1101" and inst_reg_out_s(11)='0' else 
+    ACM_data_in_s <= RAM_data_out_s when opcode="0011" and inst_reg_out_s(11)='0' else 
                     ULAout_s;
 
     ram_unit : ram

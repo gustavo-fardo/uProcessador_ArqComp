@@ -5,6 +5,7 @@ use ieee.numeric_std.all;
 entity ctrlUnit is
     port (
         instr : in unsigned (15 downto 0) := "0000000000000000";
+        ULAborrow: out std_logic := '0'; -- operação com borrow
         ULAop : out unsigned (1 downto 0) := "00"; -- selecao de operacoes da ULA
         ULA_srcA : out std_logic := '0'; -- MUX source do RegA da ULA
         ULA_srcB : out std_logic := '0'; -- MUX source do RegB da ULA
@@ -31,8 +32,11 @@ begin
 
     -- OP_ctrl (só soma e sub)
     ULAop <= "01" when opcode = "1001" else
+             "01" when opcode = "1101" else
              "01" when opcode = "0001" else
-        "00";
+             "00";
+    ULAborrow <= '1' when opcode = "1101" else
+                 '0' ; 
 
     -- funct = 1 (com imediato)
     ULA_srcA <= '0' when opcode = "0100" else
@@ -58,7 +62,7 @@ begin
         '0' when opcode = "1100" and funct = '0' else
         '0' when opcode = "1111" else
         '0' when opcode = "1110" else
-        '0' when opcode = "1101" and funct = '1' else
+        '0' when opcode = "0011" and funct = '1' else
         '0' when opcode = "0000" else
         '0' when opcode = "0101" else
         '1';
@@ -73,7 +77,7 @@ begin
               "00";
 
     -- 1 quando SW
-    RAM_wr_en <= '1' when opcode = "1101" and funct = '1' else
+    RAM_wr_en <= '1' when opcode = "0011" and funct = '1' else
                  '0';
 
     -- halt

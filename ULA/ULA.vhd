@@ -5,6 +5,7 @@ use ieee.numeric_std.all;
 entity ULA is
     port (
         sel : in unsigned(1 downto 0);
+        borrow, carry_borrow : in std_logic ;
         ent_a : in unsigned(15 downto 0);
         ent_b : in unsigned(15 downto 0);
         saida : out unsigned(15 downto 0);
@@ -38,7 +39,7 @@ architecture a_ULA of ULA is
     end component;
 
     signal saida_add, saida_sub, saida_XOR, saida_AND, saida_mux : unsigned(15 downto 0);
-    signal compl2_ent_b : unsigned(15 downto 0);
+    signal compl2_ent_b , borrow_ent_b : unsigned(15 downto 0);
     signal carry_add, carry_sub : std_logic := '0';
 
 begin
@@ -54,10 +55,14 @@ begin
     compl2_ent_b <= (not(ent_b) + 1) when ent_b(15) = '0' else
         not(ent_b - 1) when ent_b(15) = '1' else
         "0000000000000000";
+    borrow_ent_b <= (compl2_ent_b - 1) when borrow = '1' and carry_borrow ='1' else
+                     compl2_ent_b     when borrow = '0' else
+                     "0000000000000000";
+
 
     subtractor : adder_16bits port map(
         ent_a => ent_a,
-        ent_b => compl2_ent_b,
+        ent_b => borrow_ent_b,
         car_in => '0',
         saida => saida_sub,
         car_out => carry_sub);
